@@ -27,7 +27,7 @@ header {
   height: 40px;
   border: none;
   background-color: transparent;
-  margin-left: 20px;
+  margin-left: 22px;
   z-index: 2;
 
   -webkit-tap-highlight-color: transparent;
@@ -180,7 +180,7 @@ header {
 
   .menu-buttons-row {
     position: fixed;
-    left: -100px;
+    left: -95px;
     top: 0;
     width: 90px;
     height: 100vh;
