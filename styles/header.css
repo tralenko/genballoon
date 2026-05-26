@@ -29,6 +29,8 @@ header {
   background-color: transparent;
   margin-left: 20px;
   z-index: 2;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .header-burger-btn span {
