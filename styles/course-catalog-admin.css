@@ -1,0 +1,40 @@
+.admin-panel {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.course-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.course-form input, .course-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-tags {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+}
+
+.submit-btn {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.submit-btn:hover {
+  background-color: #27ae60;
+}

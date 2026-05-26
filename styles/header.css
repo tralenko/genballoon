@@ -1,0 +1,212 @@
+header {
+  height: 90px;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  padding-top: 0;
+
+  z-index: 100;
+
+  background-color: rgb(255, 255, 255);
+  /*border-radius: 0px 0px 15px 15px;
+  box-shadow: 5px 5px 5px 5px rgba(-10, 0.15, 0.15, 0.08);*/
+}
+
+.header-burger-btn {
+  display: none;
+  position: relative;
+  width: 100px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+  margin-left: 40px;
+  z-index: 2;
+}
+
+.header-burger-btn span {
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  background-color: black;
+  left: 5px;
+  top: 18.5px; /* (Высота кнопки 40 - высота палочки 3) / 2 */
+  transition: transform .5s, opacity .5s, background-color .5s;
+}
+
+.header-burger-btn span:nth-child(1){
+  transform: translateY(-10px);
+}
+
+.header-burger-btn span:nth-child(2){
+  transform: translateY(0px);
+}
+
+.header-burger-btn span:nth-child(3){
+  transform: translateY(10px);
+}
+
+.header.open .header-burger-btn span {
+  background-color: rgb(127, 0, 0);
+}
+
+.header.open .header-burger-btn span:nth-child(1){
+  transform: translateY(0) rotate(45deg);
+}
+
+.header.open .header-burger-btn span:nth-child(2){
+  opacity: 0;
+}
+
+.header.open .header-burger-btn span:nth-child(3){
+  transform: translateY(0) rotate(-45deg);
+}
+
+.logo {
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-icon {
+  height: 30px;
+}
+
+.page-name {
+  font-size: 25px;
+  font-weight: 500;
+  padding-bottom: 4px;
+  margin-left: 5px;
+}
+
+.menu-buttons-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 0px;
+  align-items: center;
+}
+
+.menu-buttons-row img {
+  height: 30px;
+}
+
+.menu-button {
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 60px;
+  background-color: rgb(234, 234, 234);
+  border-width: 0;
+  border-radius: 15px;
+  margin-left: 12px;
+  margin-right: 12px;
+  transition:0.5s;
+  cursor: pointer;
+}
+
+.menu-button:hover {
+  background-color: rgb(252, 225, 157);
+}
+
+.profile {
+  width: 250px;
+  text-align: start;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.profile a{
+  text-decoration: none;
+}
+
+.profile-button {
+  width: 55px;
+  height: 57px;
+  background-color: rgb(254, 254, 254);
+  border-width: 0;
+  border-radius: 15px;
+  border: 1px;
+  border-style: solid;
+  margin-left: 25px;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  header {
+    height: 75px;
+  }
+
+  .logo-icon {
+    height: 30px;
+  }
+
+  .page-name {
+    font-size: 25px;
+  }
+
+  .header-burger-btn {
+    display: block;
+  }
+
+  .profile {
+    width: 140px;
+  }
+
+  .profile-button {
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+  }
+
+  .menu-buttons-row {
+    position: absolute;
+    left: -100px;
+    top: 0;
+    width: 90px;
+    height: 100vh;
+    display: block;
+    padding: 90px 4px 20px 8px;
+    background-color: white;
+    transition: transform .5s;
+    border: none; /* Сбрасываем все старые границы */
+    border-right: 1px solid rgba(0, 0, 0, 0.1); /* Тонкая, едва заметная линия справа */
+  
+  /* Закругляем только правые углы */
+    border-radius: 0 20px 20px 0; 
+  
+  /* Добавляем мягкую тень для объема */
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
+
+    display: flex;   /* Включаем flex для выравнивания содержимого */
+    flex-direction: column; /* Элементы в колонку */
+    align-items: center;    /* Центрируем элементы по горизонтали */
+    justify-content: flex-start;
+  }
+
+  .menu-button-box {
+    margin-top: 15px;
+    margin-left: 2px;
+  }
+
+  .header.open .menu-buttons-row{
+    transform: translateX(100%);
+  }
+}
