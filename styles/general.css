@@ -1,0 +1,28 @@
+html {
+  /* Резервирует место под скроллбар заранее. 
+     Полоса скролла будет видна ВСЕГДА, даже если страница короткая. 
+     При открытии попапа контент гарантированно не сдвинется ни на пиксель! */
+  scrollbar-gutter: stable; 
+}
+
+body {
+  font-family: Roboto, arial;
+  margin-top: 6%;
+}
+
+html, body {
+  height: 100%;
+}
+
+
+section, main {
+  flex: 1;
+}
+
+.catalog-name {
+  font-size: 21px;
+  font-weight: 500;
+  width: 93%;
+  max-width: 1500px;
+  margin-left: 5%;
+}
