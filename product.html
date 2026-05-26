@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GenSpace</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/ad-style.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/product.css">
+        
+    <script defer src="js/header.js"></script>
+    <script src="js/product-page.js" defer></script>
+
+    <style>
+    /* Стили для страницы отдельного товара */
+    .product-page-container {
+      max-width: 800px;
+      margin: 0px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      background: rgb(247, 246, 246);
+      border: 2px solid rgb(238, 238, 238);
+      border-radius: 20px;
+      box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.10);
+    }
+    .page-image img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .page-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .page-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 0 0 5px 0;
+    }
+    .page-desc {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .page-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .page-price {
+      font-weight: bold;
+      font-size: 18px;
+      background-color: rgb(200, 225, 249);
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .page-checkout-btn {
+      font-size: 16px;
+      font-weight: 400;
+      color: white;
+      background-color: rgb(79, 178, 61);
+      height: 44px;
+      padding: 0 35px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .back-to-catalog {
+      display: inline-block;
+      margin-bottom: 5px;
+      color: #555;
+      text-decoration: none;
+    }
+    .notification-dig {
+      font-size: 14px;
+      background: rgb(249, 201, 147);
+      border: 2px solid rgb(238, 238, 238);
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 600px) {
+      .product-page-container { grid-template-columns: 1fr; gap: 20px; margin: 25px auto; width: 85%; }
+
+      body {
+      margin-top: 85px;
+    }
+    }
+  </style>
+  </head>
+  <body>
+    <header class="header open">
+      <button class="header-burger-btn" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="logo">
+        <div>
+          <img class="logo-icon" src="icons/logo.png">
+        </div>
+        <div class="page-name">
+          <p>HOME</p>
+        </div>
+      </div>
+      <div class="menu-buttons-row">
+        <div class="menu-button-box">
+          <button class="menu-button">
+            <img src="icons/shop.png">
+            SHOP
+          </button>
+        </div>
+        <div class="menu-button-box">
+          <button class="menu-button">
+            <img src="icons/courses.png">
+            COURSES
+          </button>
+        </div>
+        <div class="menu-button-box">
+          <button class="menu-button">
+            <img src="icons/home.png">
+            HOME
+          </button>
+        </div>
+        <div class="menu-button-box">
+          <button class="menu-button">
+            <img src="icons/support.png">
+            SUPPORT
+          </button>
+        </div>
+        <div class="menu-button-box">
+          <button class="menu-button">
+            <img src="icons/cart-3.png">
+            CART
+          </button>
+        </div>
+      </div>
+      <div class="profile">
+        <button class="profile-button">
+          </button>
+      </div>
+    </header>
+
+    <div style="max-width: 150px; margin-left: 25px; padding: 0 20px;">
+      <a href="product-card.html" class="back-to-catalog">← Back to catalog</a>
+    </div>
+
+    <main class="product-page-container">
+      <div class="page-image">
+        <!-- Сюда JS подставит картинку -->
+        <img id="product-img" src="" alt="">
+      </div>
+      <div class="page-info">
+        <div>
+          <!-- Сюда JS подставит название и описание -->
+          <h1 id="product-title" class="page-title">Загрузка...</h1>
+          <div id="product-desc" class="page-desc"></div>
+        </div>
+        <div class="notification-dig">
+          <p>This is a digital product, after payment you will receive access to it via your email address.</p>
+        </div>
+        <div class="page-meta-row">
+          <!-- Сюда JS подставит цену -->
+          <div id="product-price" class="page-price"></div>
+          <button class="page-checkout-btn">ADD TO CART</button>
+        </div>
+      </div>
+    </main>
+
+  </body>
+  </html>
+
+    <footer class="footer">
+    
+      <!-- TOP -->
+      <div class="footer-top">
+    
+        <!-- Brand -->
+        <div class="footer-brand">
+            <span class="footer-logo-word">GENBALLOON LTD</span>
+          </a>
+          <p>Step-by-step balloon tutorials and digital courses for decorators of all levels.</p>
+    
+          <!-- Social -->
+          <div class="social-row">
+            <a href="#" class="social-btn" aria-label="TikTok">
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path fill="currentColor"
+                  d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.2 8.2 0 0 0 4.79 1.52V6.76a4.85 4.85 0 0 1-1.02-.07z" />
+              </svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path fill="currentColor" d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path fill="currentColor"
+                  d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" />
+                <polygon fill="#fff" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+              </svg>
+            </a>
+          </div>
+    
+        </div>
+    
+        <!-- Services -->
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">Digital goods</a></li>
+            <li><a href="#">Merch <span class="badge-new">new</span></a></li>
+            <li><a href="#">Subscription</a></li>
+          </ul>
+        </div>
+    
+        <!-- Company -->
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Affiliates</a></li>
+            <li><a href="#">Press</a></li>
+          </ul>
+        </div>
+    
+        <!-- Support -->
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Contact us</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Shipping & delivery</a></li>
+            <li><a href="#">Returns</a></li>
+          </ul>
+        </div>
+    
+      </div><!-- /footer-top -->
+    
+      <!-- TRUST BAR -->
+      <div class="footer-trust">
+        <span class="trust-label">Why shop with us</span>
+        <div class="trust-pills">
+          <div class="trust-pill">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            Secure checkout
+          </div>
+          <div class="trust-pill">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Instant digital access
+          </div>
+          <div class="trust-pill">
+            <svg viewBox="0 0 24 24">
+              <polyline points="20 12 20 22 4 22 4 12" />
+              <rect x="2" y="7" width="20" height="5" />
+              <path d="M12 22V7" />
+              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+            </svg>
+            Free gift included
+          </div>
+          <div class="trust-pill">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z" />
+            </svg>
+            Friendly support
+          </div>
+        </div>
+      </div>
+    
+      <!-- BOTTOM -->
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Genballoon Ltd. All rights reserved.</span>
+        <nav class="footer-legal" aria-label="Legal links">
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms of use</a>
+          <a href="#">Cookie settings</a>
+        </nav>
+      </div>
+  
+    </footer>
+
+  </body>
+</html>
