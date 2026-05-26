@@ -179,7 +179,7 @@ header {
   }
 
   .menu-buttons-row {
-    position: absolute;
+    position: fixed;
     left: -100px;
     top: 0;
     width: 90px;
