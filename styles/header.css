@@ -152,63 +152,28 @@ header {
 }
 
 @media (max-width: 900px) {
-  header {
-    height: 75px;
-  }
-
-  .logo-icon {
-    height: 30px;
-  }
-
-  .page-name {
-    font-size: 25px;
-  }
-
-  .header-burger-btn {
-    display: block;
-  }
-
-  .profile {
-    width: 140px;
-  }
-
-  .profile-button {
-    height: 40px;
-    width: 40px;
-    border-radius: 10px;
-  }
-
   .menu-buttons-row {
     position: fixed;
-    left: -95px;
+    left: 0;
     top: 0;
-    width: 90px;
     height: 100dvh;
-    display: block;
-    padding: 90px 4px 20px 8px;
-    background-color: white;
+
+    width: 90px;
+
+    padding-top: 75px;
+    padding-bottom: 20px;
+
+    overflow-y: auto;
+
+    transform: translateX(-100%);
     transition: transform .5s;
-    border: none; /* Сбрасываем все старые границы */
-    border-right: 1px solid rgba(0, 0, 0, 0.1); /* Тонкая, едва заметная линия справа */
-  
-  /* Закругляем только правые углы */
-    border-radius: 0 20px 20px 0; 
-  
-  /* Добавляем мягкую тень для объема */
-    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
 
-    display: flex;   /* Включаем flex для выравнивания содержимого */
-    flex-direction: column; /* Элементы в колонку */
-    align-items: center;    /* Центрируем элементы по горизонтали */
-    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .menu-button-box {
-    margin-top: 15px;
-    margin-left: 2px;
-  }
-
-  .header.open .menu-buttons-row{
-    transform: translateX(100%);
+  .header.open .menu-buttons-row {
+    transform: translateX(0);
   }
 }
