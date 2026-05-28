@@ -183,7 +183,7 @@ header {
     left: -95px;
     top: 0;
     width: 90px;
-    height: 100vh;
+    height: 100dvh;
     display: block;
     padding: 90px 4px 20px 8px;
     background-color: white;
