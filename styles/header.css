@@ -18,6 +18,7 @@ header {
   background-color: rgb(255, 255, 255);
   /*border-radius: 0px 0px 15px 15px;
   box-shadow: 5px 5px 5px 5px rgba(-10, 0.15, 0.15, 0.08);*/
+  color: black;
 }
 
 .header-burger-btn {
