@@ -120,6 +120,7 @@ header {
   transition:0.5s;
   cursor: pointer;
   color: black;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .menu-button:hover {
