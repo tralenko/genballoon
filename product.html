@@ -3,6 +3,9 @@
   <head>
     <title>GenSpace</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,7 +106,7 @@
   </style>
   </head>
   <body>
-    <header class="header">
+    <header class="header open">
       <button class="header-burger-btn" id="burger">
         <span></span><span></span><span></span>
       </button>
@@ -154,7 +157,7 @@
     </header>
 
     <div style="max-width: 150px; margin-left: 25px; padding: 0 20px;">
-      <a href="product-card.html" class="back-to-catalog">← Back to catalog</a>
+      <a href="product-catalog.html" class="back-to-catalog">← Back to catalog</a>
     </div>
 
     <main class="product-page-container">
@@ -310,5 +313,6 @@
   
     </footer>
 
+    
   </body>
 </html>
