@@ -9,11 +9,11 @@ body{
 
 .hero{
   width:100%;
-  padding:0px 0px;
+  margin-top: 30px;
 }
 
 .hero-container{
-  max-width:1320px;
+  max-width:90%;
   margin:auto;
 
   display:flex;
@@ -27,9 +27,9 @@ body{
   border-style: solid;
   border-color: rgb(238, 238, 238);
   padding:20px;
-
-  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.10);
 }
+  /*box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.10);
+}*/
 
 .hero-left,
 .hero-right{
@@ -59,7 +59,7 @@ body{
 
 .hero-title{
   font-size:64px;
-  line-height:1.05;
+  line-height:1.20;
   font-weight:800;
   margin-bottom:10px;
   margin-top: 10px;
@@ -105,7 +105,11 @@ body{
 }
 
 .btn-primary:hover{
-  transform:translateY(-2px);
+  background:#06a200;
+}
+
+.btn-primary:hover{
+  
 }
 
 .btn-secondary{
@@ -202,6 +206,7 @@ body{
   .hero-container{
     padding:20px 20px;
     border-radius:24px;
+    max-width: 98%;
   }
 
   .hero-title{
@@ -222,8 +227,7 @@ body{
   }
 
   .students{
-    align-items:flex-start;
-    flex-direction:column;
+    
   }
 
   .student-avatars img{
