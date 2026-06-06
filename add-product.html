@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Добавить товар</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .card {
+      padding: 25px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      border-radius:32px;
+      border-width: 2px;
+      border-style: solid;
+      border-color: rgb(238, 238, 238);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: rgb(0, 0, 0);
+    }
+
+    input, textarea, select {
+      font-family: Arial, sans-serif;
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      border: none;
+      background: #e1e0e0;
+      color: rgb(0, 0, 0);
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: none;
+      min-height: 80px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #4f46e5;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #4338ca;
+    }
+
+    /* 📱 МОБИЛЬНАЯ АДАПТАЦИЯ */
+    @media (max-width: 480px) {
+      .card {
+        padding: 18px;
+        border-radius: 10px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      input, textarea, select {
+        font-size: 13px;
+        padding: 10px;
+      }
+
+      button {
+        font-size: 15px;
+      }
+    }
+
+    /* 📱 ПЛАНШЕТЫ */
+    @media (max-width: 768px) {
+      .card {
+        max-width: 500px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Добавить товар</h2>
+
+  <form id="productForm">
+
+    <input type="text" id="title" placeholder="Название товара" required>
+
+    <textarea id="description" placeholder="Описание"></textarea>
+
+    <input type="number" id="price" placeholder="Цена" required>
+
+    <input type="text" id="image_url" placeholder="Ссылка на картинку">
+
+    <input type="text" id="file_url" placeholder="Ссылка на файл / курс">
+
+    <select id="type">
+      <option value="file">Цифровой товар</option>
+      <option value="course">Курс</option>
+    </select>
+
+    <button type="submit">Создать товар</button>
+
+  </form>
+</div>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+  // 🔑 вставь свои ключи Supabase
+  const supabaseUrl = "https://dnfzmmytdonyrrzdxnzb.supabase.co";
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZnptbXl0ZG9ueXJyemR4bnpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyODE3NTUsImV4cCI6MjA5NTg1Nzc1NX0.HlCNlOancnoiEknx81YN5_ALTsdmTY6mwn9P3RxnkiY";
+
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const form = document.getElementById("productForm");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // 📦 собираем данные из формы
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("description").value;
+    const price = Number(document.getElementById("price").value);
+    const image_url = document.getElementById("image_url").value;
+    const file_url = document.getElementById("file_url").value;
+    const type = document.getElementById("type").value;
+
+    // 🚀 отправка в Supabase
+    const { data, error } = await supabase
+      .from("products")
+      .insert([
+        {
+          title,
+          description,
+          price,
+          image_url,
+          file_url,
+          type
+        }
+      ])
+      .select();
+
+    // ❌ ошибка
+    if (error) {
+      alert("Ошибка: " + error.message);
+      return;
+    }
+
+    // ✅ успех
+    alert("Товар успешно добавлен!");
+
+    // 🧹 очистка формы
+    form.reset();
+
+    console.log("Добавлено:", data);
+  });
+</script>
+
+</body>
+</html>
