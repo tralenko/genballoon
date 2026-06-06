@@ -22,12 +22,14 @@
       <button class="header-burger-btn" id="burger">
         <span></span><span></span><span></span>
       </button>
-      <div class="logo">
+      <div class="logo" id="logo">
         <div>
-          <img class="logo-icon" src="icons/logo.png">
+          <div class="logo-txt">
+            <p>GEN</p>
+          </div>
         </div>
         <div class="page-name">
-          <p>HOME</p>
+          <p>LEARN</p>
         </div>
       </div>
       <div class="menu-buttons-row">
@@ -56,13 +58,13 @@
           </button>
         </div>
         <div class="menu-button-box">
-          <button class="menu-button">
+          <button class="menu-button" onclick="window.location.href='auth.html';">
             <img src="icons/log in.png">
             LOG IN
           </button>
         </div>
       </div>
-      <div class="profile">
+      <div class="cart">
         <button class="cart-button">
          <img src="icons/cart-3.png"> 
           </button>
@@ -321,6 +323,3 @@ loadCourses();
 </script>
   </body>
 </html>
-  
-
-  
