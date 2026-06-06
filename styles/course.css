@@ -58,11 +58,11 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: end;
-  height: 60px;
+  height: 50px;
 }
 
 .price-ammount-box {
-  height: 50px;
+  height: 42px;
   width: 80px;
   font-weight: bold;
   font-size: 20px;
@@ -101,7 +101,7 @@
 }
 
 .teg-1-text {
-  background-color: rgb(9, 60, 213);
+  background-color: rgb(9, 59, 213);
   border-radius: 5px;
   display: flex;
   justify-content: center; /* по горизонтали */
@@ -153,7 +153,7 @@
 }
 
 .course-description {
-  height: 130px;
+  height: 100px;
   grid-column: span 3; 
   text-align: justify;
   border-top: 1px solid rgb(177, 177, 177);
@@ -170,6 +170,9 @@
   
   padding-top: 10px;
   width: 100%;
+
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .description-text p {
