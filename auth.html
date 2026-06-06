@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Вход и регистрация</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet">
+<link rel="stylesheet" href="styles/general.css">
 <link rel="stylesheet" href="styles/header.css">
+
+
+<script defer src="js/header.js"></script>
 
 <style>
 
@@ -13,7 +21,6 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial,sans-serif;
 }
 
 body{
@@ -22,8 +29,8 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:20px;
-    padding-top: 60px;
+    padding:0px 20px;
+    padding-top: 0px;
 }
 
 .auth-page{
@@ -168,22 +175,35 @@ body{
     .auth-btn{ height:38px; font-size:15px; }
 }
 
+@media (max-width: 768px){
+    body{
+        align-items:flex-start;
+        padding-top:120px;
+    }
+}
+
+@media (min-width: 769px){
+    body{
+        align-items:center;
+    }
+}
 </style>
 </head>
 
-<header class="header">
+<body>
+
+    <header class="header">
       <button class="header-burger-btn" id="burger">
         <span></span><span></span><span></span>
       </button>
-      <div class="logo">
+      <div class="logo" id="logo">
         <div>
-          <!--<img class="logo-icon" src="icons/logo.png">-->
-          <div class="logo-txt" id="logo">
+          <div class="logo-txt">
             <p>GEN</p>
           </div>
         </div>
         <div class="page-name">
-          <p>HOME</p>
+          <p>SHOP</p>
         </div>
       </div>
       <div class="menu-buttons-row">
@@ -211,7 +231,12 @@ body{
             SUPPORT
           </button>
         </div>
-        
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='auth.html';">
+            <img src="icons/log in.png">
+            LOG IN
+          </button>
+        </div>
       </div>
       <div class="cart">
         <button class="cart-button">
@@ -219,8 +244,6 @@ body{
           </button>
       </div>
     </header>
-
-<body>
 
 <div class="auth-page">
 <div class="auth-card">
