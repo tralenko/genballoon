@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вход и регистрация</title>
+
+<link rel="stylesheet" href="styles/header.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:white;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    padding-top: 60px;
+}
+
+.auth-page{
+    width:100%;
+    display:flex;
+    justify-content:center;
+}
+
+.auth-card{
+    width:100%;
+    max-width:420px;
+    background-color:rgb(247,246,246);
+    border-width:2px;
+    border-style:solid;
+    border-color:rgb(238,238,238);
+    border-radius:20px;
+    padding:25px;
+    box-shadow:5px 10px 15px rgba(0,0,0,.10);
+}
+
+/* Переключатель вкладок */
+.auth-tabs{
+    display:flex;
+    background:rgb(238,238,238);
+    border-radius:14px;
+    padding:4px;
+    margin-bottom:25px;
+    gap:4px;
+}
+
+.auth-tab{
+    flex:1;
+    height:36px;
+    border:none;
+    border-radius:11px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    background:transparent;
+    color:gray;
+    transition:background .2s, color .2s;
+}
+
+.auth-tab.active{
+    background:white;
+    color:black;
+    box-shadow:0 1px 4px rgba(0,0,0,.12);
+}
+
+.auth-title{
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:25px;
+}
+
+.auth-input{
+    width:100%;
+    height:48px;
+    padding:0 15px;
+    border:2px solid rgb(238,238,238);
+    border-radius:12px;
+    margin-bottom:12px;
+    font-size:15px;
+    background:white;
+    transition:border-color .2s;
+}
+
+.auth-input:focus{
+    outline:none;
+    border-color:rgb(79,178,61);
+}
+
+/* Анимация появления поля имени */
+.name-field{
+    overflow:hidden;
+    max-height:0;
+    opacity:0;
+    transition:max-height .3s ease, opacity .3s ease, margin .3s ease;
+    margin-bottom:0;
+}
+
+.name-field.visible{
+    max-height:70px;
+    opacity:1;
+    margin-bottom:0;
+}
+
+.auth-btn{
+    width:100%;
+    height:40px;
+    border:none;
+    border-radius:17px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:540;
+    margin-bottom:10px;
+}
+
+.login-btn{
+    background-color:rgb(79,178,61);
+    color:white;
+}
+
+.register-btn{
+    background-color:rgb(79,178,61);
+    color:white;
+}
+
+.google-btn{
+    background:white;
+    color:black;
+    border:2px solid rgb(238,238,238);
+}
+
+.google-btn:hover,
+.login-btn:hover,
+.register-btn:hover{
+    opacity:.95;
+}
+
+.divider{
+    text-align:center;
+    margin:15px 0;
+    color:gray;
+    font-size:13px;
+}
+
+.auth-status{
+    margin-top:10px;
+    text-align:center;
+    font-size:14px;
+}
+
+.success{ color:green; }
+.error{ color:red; }
+
+@media(max-width:480px){
+    .auth-card{ padding:18px; }
+    .auth-title{ font-size:20px; }
+    .auth-input{ height:45px; }
+    .auth-btn{ height:38px; font-size:15px; }
+}
+
+</style>
+</head>
+
+<header class="header">
+      <button class="header-burger-btn" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="logo">
+        <div>
+          <!--<img class="logo-icon" src="icons/logo.png">-->
+          <div class="logo-txt" id="logo">
+            <p>GEN</p>
+          </div>
+        </div>
+        <div class="page-name">
+          <p>HOME</p>
+        </div>
+      </div>
+      <div class="menu-buttons-row">
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='index.html';">
+            <img src="icons/home.png">
+            HOME
+          </button>
+        </div>
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='product-catalog.html';">
+            <img src="icons/shop.png">
+            SHOP
+          </button>
+      </div>
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='course-catalog.html';">
+            <img src="icons/courses.png">
+            COURSES
+          </button>
+        </div>
+        <div class="menu-button-box">
+          <button class="menu-button">
+            <img src="icons/support.png">
+            SUPPORT
+          </button>
+        </div>
+        
+      </div>
+      <div class="cart">
+        <button class="cart-button">
+         <img src="icons/cart-3.png"> 
+          </button>
+      </div>
+    </header>
+
+<body>
+
+<div class="auth-page">
+<div class="auth-card">
+
+    <!-- Переключатель -->
+    <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login"    onclick="switchTab('login')">Log In</button>
+        <button class="auth-tab"        id="tab-register" onclick="switchTab('register')">Sign Up</button>
+    </div>
+
+    <div class="auth-title" id="auth-title">Login to your account</div>
+
+    <!-- Поле имени — только для регистрации -->
+    <div class="name-field" id="name-field">
+        <input id="name" class="auth-input" type="text" placeholder="Имя">
+    </div>
+
+    <input id="email"    class="auth-input" type="email"    placeholder="Email">
+    <input id="password" class="auth-input" type="password" placeholder="Password">
+
+    <button class="auth-btn login-btn"    id="main-btn" onclick="submitForm()">Login</button>
+
+    <div class="divider">or</div>
+
+    <button class="auth-btn google-btn" onclick="googleLogin()">Login via Google</button>
+
+    <div id="status" class="auth-status"></div>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabaseUrl = "https://dnfzmmytdonyrrzdxnzb.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZnptbXl0ZG9ueXJyemR4bnpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyODE3NTUsImV4cCI6MjA5NTg1Nzc1NX0.HlCNlOancnoiEknx81YN5_ALTsdmTY6mwn9P3RxnkiY";
+
+const sb = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+let currentTab = "login";
+
+// Проверяем сессию при загрузке (редирект после OAuth)
+window.addEventListener("load", async () => {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) await redirectByRole(session.user.id);
+});
+
+function switchTab(tab) {
+    currentTab = tab;
+
+    document.getElementById("tab-login").classList.toggle("active", tab === "login");
+    document.getElementById("tab-register").classList.toggle("active", tab === "register");
+
+    const nameField = document.getElementById("name-field");
+    nameField.classList.toggle("visible", tab === "register");
+
+    document.getElementById("auth-title").textContent =
+        tab === "login" ? "Login to your account" : "Create an account";
+
+    document.getElementById("main-btn").textContent =
+        tab === "login" ? "Войти" : "Создать аккаунт";
+
+    document.getElementById("status").textContent = "";
+}
+
+function showMessage(text, isError = false) {
+    const status = document.getElementById("status");
+    status.textContent = text;
+    status.className = isError ? "auth-status error" : "auth-status success";
+}
+
+async function redirectByRole(userId) {
+    const { data: profile, error } = await sb
+        .from("profiles")
+        .select("role")
+        .eq("id", userId)
+        .single();
+
+    if (error || !profile) {
+        await new Promise(r => setTimeout(r, 1000));
+        return redirectByRole(userId);
+    }
+
+    window.location.href = profile.role === "admin" ? "/admin.html" : "/profile.html";
+}
+
+function submitForm() {
+    currentTab === "login" ? login() : register();
+}
+
+// РЕГИСТРАЦИЯ
+async function register() {
+    const name     = document.getElementById("name").value.trim();
+    const email    = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!name)     return showMessage("Введи имя", true);
+    if (!email)    return showMessage("Введи email", true);
+    if (!password) return showMessage("Введи password", true);
+
+    const { error } = await sb.auth.signUp({
+        email,
+        password,
+        options: {
+            data: { name }   // сохраняем в user_metadata — триггер может читать отсюда
+        }
+    });
+
+    if (error) return showMessage(error.message, true);
+
+    showMessage("Регистрация успешна. Проверь почту.");
+}
+
+// ВХОД
+async function login() {
+    const email    = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) return showMessage("Заполни email и пароль", true);
+
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+    if (error) return showMessage(error.message, true);
+
+    showMessage("Входим...");
+    await redirectByRole(data.user.id);
+}
+
+// GOOGLE
+async function googleLogin() {
+    const { error } = await sb.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: window.location.origin + "/index.html" }
+    });
+
+    if (error) showMessage(error.message, true);
+}
+</script>
+
+</body>
+</html>
