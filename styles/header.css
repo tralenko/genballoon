@@ -39,7 +39,7 @@ header {
   height: 3px;
   background-color: black;
   left: 5px;
-  top: 18.5px; 
+  top: 18.5px; /* (Высота кнопки 40 - высота палочки 3) / 2 */
   transition: transform .5s, opacity .5s, background-color .5s;
 }
 
@@ -74,9 +74,57 @@ header {
 .logo {
   width: 250px;
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+
+  user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.logo-txt {
+  width: 52px;
+  height: 28px;
+
+  background-color: rgb(9, 59, 213);
+  color: white;
+
+  display: flex;
   justify-content: center;
   align-items: center;
+
+  font-size: 18px;
+  font-weight: 500;
+
+  border-radius: 4px;
+}
+
+.logo-txt {
+  margin-top: 1px;
+}
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confettiFly 1.5s ease-out forwards;
+}
+
+@keyframes confettiFly {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(var(--x), var(--y)) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 .logo-icon {
@@ -86,8 +134,8 @@ header {
 .page-name {
   font-size: 25px;
   font-weight: 500;
-  padding-bottom: 4px;
-  margin-left: 5px;
+  padding-bottom: 0px;
+  margin-left: 0px;
 }
 
 .menu-buttons-row {
@@ -96,10 +144,6 @@ header {
   justify-content: space-between;
   margin-left: 0px;
   align-items: center;
-}
-
-.menu-buttons-row img {
-  height: 30px;
 }
 
 .menu-button {
@@ -119,20 +163,27 @@ header {
   margin-right: 12px;
   transition:0.5s;
   cursor: pointer;
-  color: black;
-  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-button img{
+  height: 30px;
 }
 
 .menu-button:hover {
   background-color: rgb(252, 225, 157);
 }
 
-.profile {
+.menu-button.active {
+  background-color: rgb(252, 225, 157); 
+  cursor: default; 
+}
+
+.cart {
   width: 250px;
   text-align: start;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   column-gap: 10px;
 }
@@ -141,21 +192,36 @@ header {
   text-decoration: none;
 }
 
-.profile-button {
+.cart-button {
   width: 55px;
-  height: 57px;
-  background-color: rgb(254, 254, 254);
+  height: 60px;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
   border-width: 0;
   border-radius: 15px;
-  border: 1px;
-  border-style: solid;
-  margin-left: 25px;
+  margin-left: 12px;
+  margin-right: 12px;
+  transition:0.5s;
   cursor: pointer;
+}
+
+.cart-button img {
+  height: 30px;
 }
 
 @media (max-width: 900px) {
   header {
     height: 75px;
+  }
+
+  .logo-txt {
+    font-weight: 500;
   }
 
   .logo-icon {
@@ -170,7 +236,7 @@ header {
     display: block;
   }
 
-  .profile {
+  .cart {
     width: 140px;
   }
 
@@ -185,23 +251,27 @@ header {
     left: -95px;
     top: 0;
     width: 90px;
-    bottom: 0;           /* вместо height: 100vh */
-    height: 100dvh;
+    height: 100vh;
     display: block;
     padding: 90px 4px 20px 8px;
     background-color: white;
     transition: transform .5s;
-    border: none; 
-    border-right: 1px solid rgba(0, 0, 0, 0.1); 
+    border: none; /* Сбрасываем все старые границы */
+    border-right: 1px solid rgba(0, 0, 0, 0.1); /* Тонкая, едва заметная линия справа */
   
+  /* Закругляем только правые углы */
     border-radius: 0 20px 20px 0; 
   
+  /* Добавляем мягкую тень для объема */
     box-shadow: 4px 0 15px rgba(0, 0, 0, 0.05);
 
-    display: flex;  
-    flex-direction: column; 
-    align-items: center;    
+    display: flex;   /* Включаем flex для выравнивания содержимого */
+    flex-direction: column; /* Элементы в колонку */
+    align-items: center;    /* Центрируем элементы по горизонтали */
     justify-content: flex-start;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(238, 238, 238);
   }
 
   .menu-button-box {
@@ -212,4 +282,8 @@ header {
   .header.open .menu-buttons-row{
     transform: translateX(100%);
   }
+
+  .cart-button img {
+  height: 25px;
+}
 }
