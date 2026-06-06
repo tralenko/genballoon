@@ -3,6 +3,9 @@
   <head>
     <title>GenSpace</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,15 +27,23 @@
       <button class="header-burger-btn" id="burger">
         <span></span><span></span><span></span>
       </button>
-      <div class="logo">
+      <div class="logo" id="logo">
         <div>
-          <img class="logo-icon" src="icons/logo.png">
+          <div class="logo-txt">
+            <p>GEN</p>
+          </div>
         </div>
         <div class="page-name">
-          <p>HOME</p>
+          <p>SHOP</p>
         </div>
       </div>
       <div class="menu-buttons-row">
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='index.html';">
+            <img src="icons/home.png">
+            HOME
+          </button>
+        </div>
         <div class="menu-button-box">
           <button class="menu-button" onclick="window.location.href='product-catalog.html';">
             <img src="icons/shop.png">
@@ -46,26 +57,21 @@
           </button>
         </div>
         <div class="menu-button-box">
-          <button class="menu-button" onclick="window.location.href='index.html';">
-            <img src="icons/home.png">
-            HOME
-          </button>
-        </div>
-        <div class="menu-button-box">
           <button class="menu-button">
             <img src="icons/support.png">
             SUPPORT
           </button>
         </div>
         <div class="menu-button-box">
-          <button class="menu-button">
-            <img src="icons/cart-3.png">
-            CART
+          <button class="menu-button" onclick="window.location.href='auth.html';">
+            <img src="icons/log in.png">
+            LOG IN
           </button>
         </div>
       </div>
-      <div class="profile">
-        <button class="profile-button">
+      <div class="cart">
+        <button class="cart-button">
+         <img src="icons/cart-3.png"> 
           </button>
       </div>
     </header>
@@ -75,8 +81,8 @@
     </div>
 
     <section>
-      <div class="catalog-product-grid" > 
-        <div class="product-card" data-id="painting-full">
+      <div class="catalog-product-grid"  id="products-container"> 
+      <!--<div class="product-card" data-id="painting-full">
             <div class="product-thumbnail">
               <img class="p-thumbnail" src="card thumbnail/thumbnail-2.jpeg">
             </div>
@@ -86,7 +92,7 @@
             <div class="product-description">
               <div class="p-description-text">
                 <p>Learn how to create stunning decorative </p>
-              </div>
+              </div> 
             </div>
             <div class="p-start-course">
               <a href="product.html?id=painting-full" class="p-buy-link">BUY</a>
@@ -96,70 +102,8 @@
                 <p>$4.99</p>
               </div>
           </div>
-        </div>
-        <div class="product-card">
-          <div class="product-thumbnail">
-            <img class="p-thumbnail" src="card thumbnail/thumbnail-2.jpeg">
-          </div>
-          <div class="product-name-box">
-              <p class="product-name">Painting tutorial - full + free gift as digital</p> 
-          </div>
-          <div class="product-description">
-            <div class="p-description-text">
-              <p>Learn how to create stunning decorative </p>
-            </div>
-          </div>
-          <div class="p-start-course">
-            <button class="p-start-button">BUY</button>
-          </div>
-          <div class="p-price-box">
-            <div class="p-price-ammount-box">
-              <p>$4.99</p>
-            </div>
-        </div>
-        </div>
-        <div class="product-card">
-          <div class="product-thumbnail">
-            <img class="p-thumbnail" src="card thumbnail/thumbnail-2.jpeg">
-          </div>
-          <div class="product-name-box">
-              <p class="product-name">Painting tutorial - full + free gift as digital</p> 
-          </div>
-          <div class="product-description">
-            <div class="p-description-text">
-              <p>Learn how to create stunning decorative </p>
-            </div>
-          </div>
-          <div class="p-start-course">
-            <button class="p-start-button">BUY</button>
-          </div>
-          <div class="p-price-box">
-            <div class="p-price-ammount-box">
-              <p>$4.99</p>
-            </div>
-        </div>
-        </div>
-        <div class="product-card">
-          <div class="product-thumbnail">
-            <img class="p-thumbnail" src="card thumbnail/thumbnail-2.jpeg">
-          </div>
-          <div class="product-name-box">
-              <p class="product-name">Painting tutorial - full + free gift as digital</p> 
-          </div>
-          <div class="product-description">
-            <div class="p-description-text">
-              <p>Learn how to create stunning decorative </p>
-            </div>
-          </div>
-          <div class="p-start-course">
-            <button class="p-start-button">BUY</button>
-          </div>
-          <div class="p-price-box">
-            <div class="p-price-ammount-box">
-              <p>$4.99</p>
-            </div>
-        </div>
-        </div>    
+        </div> -->
+ 
       
 
     </section>
@@ -294,27 +238,108 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.querySelector('.catalog-product-grid');
+        const grid = document.querySelector('.catalog-product-grid');
 
-  if (grid) {
-    grid.addEventListener('click', (e) => {
-      // Находим карточку товара, по которой кликнули
-      const card = e.target.closest('.product-card');
-      
-      // Если кликнули мимо карточки — ничего не делаем
-      if (!card) return;
+        if (grid) {
+          grid.addEventListener('click', (e) => {
+            // Находим карточку товара, по которой кликнули
+            const card = e.target.closest('.product-card');
 
-      // Получаем id товара из атрибута data-id карточки
-      const productId = card.getAttribute('data-id');
+            // Если кликнули мимо карточки — ничего не делаем
+            if (!card) return;
 
-      // Если у карточки есть data-id, перенаправляем пользователя на страницу товара
-      if (productId) {
-        window.location.href = `product.html?id=${productId}`;
-      }
-    });
-  }
-});
+            // Получаем id товара из атрибута data-id карточки
+            const productId = card.getAttribute('data-id');
+
+            // Если у карточки есть data-id, перенаправляем пользователя на страницу товара
+            if (productId) {
+              window.location.href = `product.html?id=${productId}`;
+            }
+          });
+        }
+      });
     </script>
 
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Получаем имя текущего файла из адресной строки (например, 'product-catalog.html')
+      // Если открыта главная папка, по умолчанию считаем, что это 'index.html'
+      const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+
+      // Перебираем все кнопки меню
+      document.querySelectorAll('.menu-button').forEach(button => {
+        const onclickAttribute = button.getAttribute('onclick');
+        
+        if (onclickAttribute) {
+          // Проверяем, содержится ли имя текущего файла внутри строки onclick
+          if (onclickAttribute.includes(currentFile)) {
+            button.classList.add('active');
+          }
+        }
+      });
+    });
+    </script>
+
+    <script>
+    async function loadProducts() {
+  const container = document.getElementById("products-container");
+
+  const { data, error } = await supabaseClient
+    .from("products")
+    .select("*")
+    .eq("type", "file");
+
+  if (error) {
+    console.log("DB error:", error);
+    return;
+  }
+
+  container.innerHTML = "";
+
+  data.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.setAttribute("data-id", product.id);
+
+    card.innerHTML = `
+      <div class="product-thumbnail">
+        <img class="p-thumbnail" src="${product.image_url || ''}">
+      </div>
+
+      <div class="product-name-box">
+        <p class="product-name">${product.title}</p>
+      </div>
+
+      <!-- <div class="product-description">
+        <div class="p-description-text">
+          <p>${product.description || ''}</p>
+        </div> 
+      </div> -->
+
+      <div class="p-start-course">
+        <a href="product.html?id=${product.id}" class="p-buy-link">
+           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6h15l-2 9H7L6 6Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L5 3H2" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="9" cy="20" r="1.5" fill="white"/>
+            <circle cx="18" cy="20" r="1.5" fill="white"/>
+            </svg>
+        </a>
+      </div>
+
+      <div class="p-price-box">
+        <div class="p-price-ammount-box">
+          <p>$${product.price}</p>
+        </div>
+      
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", loadProducts);
+    </script>
   </body>
 </html>
