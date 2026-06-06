@@ -13,11 +13,15 @@ html {
      Полоса скролла будет видна ВСЕГДА, даже если страница короткая. 
      При открытии попапа контент гарантированно не сдвинется ни на пиксель! */
   scrollbar-gutter: stable; 
+  touch-action: manipulation
 }
 
 body {
   font-family: Roboto, arial;
   margin-top: 6%;
+
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 html, body {
