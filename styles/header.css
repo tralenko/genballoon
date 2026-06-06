@@ -164,7 +164,13 @@ header {
   transition:0.5s;
   cursor: pointer;
 
-  -webkit-tap-highlight-color: transparent;
+  color: inherit;
+  ;
+
+  -webkit-appearance: none;
+  appearance: none;
+
+  text-decoration: none;
 }
 
 .menu-button img{
