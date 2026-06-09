@@ -5,13 +5,9 @@
 html,
 body{
   overflow-x:hidden;
-  touch-action: manipulation;
 }
 
 html {
-  /* Резервирует место под скроллбар заранее. 
-     Полоса скролла будет видна ВСЕГДА, даже если страница короткая. 
-     При открытии попапа контент гарантированно не сдвинется ни на пиксель! */
   scrollbar-gutter: stable; 
   touch-action: manipulation
 }
