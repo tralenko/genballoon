@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Профиль</title>
+
+<link rel="stylesheet" href="styles/general.css">
+<link rel="stylesheet" href="styles/header.css">
+
+<script defer src="js/header.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/profile.js"></script>
+
+<style>
+body{
+    background:white;
+    padding-top:50px;
+    font-family:Roboto,sans-serif;
+}
+
+.profile-container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:20px;
+}
+
+.profile-card{
+    background:rgb(255, 255, 255);
+    border:2px solid rgb(238,238,238);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:5px 10px 15px rgba(0,0,0,.08);
+    margin-bottom:25px;
+}
+
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+.avatar{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    background:white;
+    border:3px solid rgb(79,178,61);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.avatar img{
+    width:65px;
+    opacity:.8;
+}
+
+.user-info h1{
+    font-size:28px;
+    margin-bottom:6px;
+}
+
+.user-email{
+    color:gray;
+}
+
+.section-title{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.items-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:20px;
+}
+
+.item-card{
+    background:white;
+    border:2px solid rgb(238,238,238);
+    border-radius:16px;
+    padding:15px;
+    transition:.2s;
+}
+
+.item-card:hover{
+    transform:translateY(-2px);
+}
+
+.item-title{
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+.item-description{
+    color:gray;
+    font-size:14px;
+    margin-bottom:15px;
+}
+
+.item-btn{
+    border:none;
+    background:rgb(79,178,61);
+    color:white;
+    padding:10px 16px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.purchase-row{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 0;
+    border-bottom:1px solid rgb(230,230,230);
+}
+
+.purchase-row:last-child{
+    border-bottom:none;
+}
+
+.logout-btn{
+    margin-top:15px;
+    border:none;
+    background:#e74c3c;
+    color:white;
+    padding:12px 18px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+@media(max-width:768px){
+
+.profile-header{
+    flex-direction:column;
+    text-align:center;
+}
+
+.user-info h1{
+    font-size:24px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+      <button class="header-burger-btn" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="logo" id="logo">
+        <div>
+          <div class="logo-txt">
+            <p>GEN</p>
+          </div>
+        </div>
+        <div class="page-name">
+          <p>SHOP</p>
+        </div>
+      </div>
+      <div class="menu-buttons-row">
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='index.html';">
+            <img src="icons/home.png">
+            HOME
+          </button>
+        </div>
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='product-catalog.html';">
+            <img src="icons/shop.png">
+            SHOP
+          </button>
+      </div>
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='course-catalog.html';">
+            <img src="icons/courses.png">
+            COURSES
+          </button>
+        </div>
+        <div class="menu-button-box">
+          <button class="menu-button">
+            <img src="icons/support.png">
+            SUPPORT
+          </button>
+        </div>
+        
+      </div>
+      <div class="cart">
+        <button class="cart-button">
+         <img src="icons/cart-3.png"> 
+          </button>
+      </div>
+    </header>
+
+<div class="profile-container">
+
+    <!-- Профиль -->
+    <div class="profile-card">
+
+        <div class="profile-header">
+
+            <div class="avatar">
+                <img src="icons/user.png">
+            </div>
+
+            <div class="user-info">
+                <h1 id="username">Загрузка...</h1>
+                <div class="user-email" id="useremail"></div>
+
+                <button class="logout-btn" onclick="logout()">
+                    Выйти
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Курсы -->
+    <div class="profile-card">
+
+        <div class="section-title">
+            Мои курсы
+        </div>
+
+        <div class="items-grid" id="courses-container">
+
+        </div>
+
+    </div>
+
+    <!-- Цифровые товары -->
+    <div class="profile-card">
+
+        <div class="section-title">
+            Мои товары
+        </div>
+
+        <div class="items-grid" id="products-container">
+
+        </div>
+
+    </div>
+
+    <!-- История -->
+    <div class="profile-card">
+
+        <div class="section-title">
+            История покупок
+        </div>
+
+        <div id="orders-container">
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const sb = supabase.createClient(
+    "YOUR_SUPABASE_URL",
+    "YOUR_SUPABASE_ANON_KEY"
+);
+
+async function loadProfile(){
+
+    const {
+        data:{user}
+    } = await sb.auth.getUser();
+
+    if(!user){
+        location.href = "auth.html";
+        return;
+    }
+
+    document.getElementById("useremail").textContent =
+        user.email;
+
+    // имя пользователя из profiles
+    const {data:profile} = await sb
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+    if(profile){
+        document.getElementById("username").textContent =
+            profile.name;
+    }
+
+    // курсы
+    const {data:courses} = await sb
+        .from("user_courses")
+        .select("*")
+        .eq("user_id", user.id);
+
+    const coursesContainer =
+        document.getElementById("courses-container");
+
+    courses?.forEach(course=>{
+
+        coursesContainer.innerHTML += `
+            <div class="item-card">
+                <div class="item-title">${course.title}</div>
+
+                <button class="item-btn">
+                    Продолжить
+                </button>
+            </div>
+        `;
+    });
+
+    // цифровые товары
+    const {data:products} = await sb
+        .from("user_products")
+        .select("*")
+        .eq("user_id", user.id);
+
+    const productsContainer =
+        document.getElementById("products-container");
+
+    products?.forEach(product=>{
+
+        productsContainer.innerHTML += `
+            <div class="item-card">
+                <div class="item-title">${product.title}</div>
+
+                <button
+                    class="item-btn"
+                    onclick="window.open('${product.file_url}')">
+                    Скачать
+                </button>
+            </div>
+        `;
+    });
+
+    // история покупок
+    const {data:orders} = await sb
+        .from("orders")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at",{ascending:false});
+
+    const ordersContainer =
+        document.getElementById("orders-container");
+
+    orders?.forEach(order=>{
+
+        ordersContainer.innerHTML += `
+            <div class="purchase-row">
+                <div>${order.product_name}</div>
+                <div>${order.price}$</div>
+            </div>
+        `;
+    });
+}
+
+async function logout(){
+    await sb.auth.signOut();
+    location.href = "index.html";
+}
+
+loadProfile();
+</script>
+
+</body>
+</html>
+```
