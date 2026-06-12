@@ -17,9 +17,12 @@
     <link rel="stylesheet" href="styles/ad-style.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/product.css">
+
+    <link rel="stylesheet" href="styles/added-notification.css">
         
     <script defer src="js/header.js"></script>
     <script defer src="js/product-card.js"></script>
+    <script src="js/cart.js"></script>
 
   </head>
   <body>
@@ -70,9 +73,21 @@
         </div>
       </div>
       <div class="cart">
-        <button class="cart-button">
-         <img src="icons/cart-2.png"> 
-          </button>
+        <button class="cart-button" onclick="window.location.href='cart.html'">
+          <img src="icons/cart-2.png">
+          <span class="cart-badge" style="
+            display: none;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0px;
+            color: #111;
+            font-size: 22px;
+            font-weight: 500;
+            pointer-events: none;
+            line-height: 1;
+          ">0</span>
+        </button>
       </div>
     </header>
 
@@ -237,109 +252,119 @@
     </footer>
 
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const grid = document.querySelector('.catalog-product-grid');
+document.addEventListener("DOMContentLoaded", () => {
 
-        if (grid) {
-          grid.addEventListener('click', (e) => {
-            // Находим карточку товара, по которой кликнули
-            const card = e.target.closest('.product-card');
+  // --- Активная кнопка меню ---
+  const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.menu-button').forEach(button => {
+    const onclickAttribute = button.getAttribute('onclick');
+    if (onclickAttribute && onclickAttribute.includes(currentFile)) {
+      button.classList.add('active');
+    }
+  });
 
-            // Если кликнули мимо карточки — ничего не делаем
-            if (!card) return;
+  // --- Загрузка товаров и обработка кликов ---
+  async function loadProducts() {
+    const container = document.getElementById("products-container");
 
-            // Получаем id товара из атрибута data-id карточки
-            const productId = card.getAttribute('data-id');
+    const { data, error } = await supabaseClient
+      .from("products")
+      .select("*")
+      .eq("type", "file");
 
-            // Если у карточки есть data-id, перенаправляем пользователя на страницу товара
-            if (productId) {
-              window.location.href = `product.html?id=${productId}`;
-            }
-          });
-        }
-      });
-    </script>
+    if (error) {
+      console.log("DB error:", error);
+      return;
+    }
 
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Получаем имя текущего файла из адресной строки (например, 'product-catalog.html')
-      // Если открыта главная папка, по умолчанию считаем, что это 'index.html'
-      const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+    container.innerHTML = "";
 
-      // Перебираем все кнопки меню
-      document.querySelectorAll('.menu-button').forEach(button => {
-        const onclickAttribute = button.getAttribute('onclick');
-        
-        if (onclickAttribute) {
-          // Проверяем, содержится ли имя текущего файла внутри строки onclick
-          if (onclickAttribute.includes(currentFile)) {
-            button.classList.add('active');
-          }
-        }
-      });
+    data.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.setAttribute("data-id", product.id);
+
+      card.innerHTML = `
+        <div class="product-thumbnail">
+          <img class="p-thumbnail" src="${product.image_url || ''}">
+        </div>
+        <div class="product-name-box">
+          <p class="product-name">${product.title}</p>
+        </div>
+        <div class="p-start-course">
+          <button class="p-buy-link add-to-cart-btn"
+            data-id="${product.id}"
+            data-title="${product.title}"
+            data-price="${product.price}"
+            data-image="${product.image_url || ''}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M6 6h15l-2 9H7L6 6Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 6L5 3H2" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="9" cy="20" r="1.5" fill="white"/>
+              <circle cx="18" cy="20" r="1.5" fill="white"/>
+            </svg>
+          </button>
+        </div>
+        <div class="p-price-box">
+          <div class="p-price-ammount-box">
+            <p>$${product.price}</p>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
     });
-    </script>
 
-    <script>
-    async function loadProducts() {
-  const container = document.getElementById("products-container");
+    // --- Клики по сетке товаров (вешаем ПОСЛЕ того как карточки отрисованы) ---
+    const grid = document.getElementById("products-container");
 
-  const { data, error } = await supabaseClient
-    .from("products")
-    .select("*")
-    .eq("type", "file");
+    grid.addEventListener('click', (e) => {
 
-  if (error) {
-    console.log("DB error:", error);
-    return;
+      // Если кликнули по кнопке корзины — добавляем товар, карточку не открываем
+      const btn = e.target.closest('.add-to-cart-btn');
+      if (btn) {
+        addToCart({
+          id: btn.dataset.id,
+          title: btn.dataset.title,
+          price: btn.dataset.price,
+          image_url: btn.dataset.image,
+        });
+
+        showCartToast();
+        return;
+      }
+
+      // Иначе — открываем страницу товара
+      const card = e.target.closest('.product-card');
+      if (!card) return;
+      const productId = card.getAttribute('data-id');
+      if (productId) {
+        window.location.href = `product.html?id=${productId}`;
+      }
+    });
   }
 
-  container.innerHTML = "";
+  function showCartToast() {
 
-  data.forEach(product => {
-    const card = document.createElement("div");
-    card.className = "product-card";
-    card.setAttribute("data-id", product.id);
+  const toast = document.getElementById('cart-toast');
 
-    card.innerHTML = `
-      <div class="product-thumbnail">
-        <img class="p-thumbnail" src="${product.image_url || ''}">
-      </div>
+  if (!toast) return;
 
-      <div class="product-name-box">
-        <p class="product-name">${product.title}</p>
-      </div>
+  toast.classList.add('show');
 
-      <!-- <div class="product-description">
-        <div class="p-description-text">
-          <p>${product.description || ''}</p>
-        </div> 
-      </div> -->
+  clearTimeout(toast.hideTimer);
 
-      <div class="p-start-course">
-        <a href="product.html?id=${product.id}" class="p-buy-link">
-           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path d="M6 6h15l-2 9H7L6 6Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 6L5 3H2" stroke="white" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="9" cy="20" r="1.5" fill="white"/>
-            <circle cx="18" cy="20" r="1.5" fill="white"/>
-            </svg>
-        </a>
-      </div>
-
-      <div class="p-price-box">
-        <div class="p-price-ammount-box">
-          <p>$${product.price}</p>
-        </div>
-      
-      </div>
-    `;
-
-    container.appendChild(card);
-  });
+  toast.hideTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2500);
 }
 
-document.addEventListener("DOMContentLoaded", loadProducts);
-    </script>
+  loadProducts();
+});
+</script>
+
+    <div id="cart-toast" class="cart-toast">
+      <span>✓ Added to cart</span>
+    </div>
   </body>
 </html>
