@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Course</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="styles/header.css">
+  <link rel="stylesheet" href="styles/general.css">
+  <link rel="stylesheet" href="styles/footer.css">
+
+  <style>
+
+    .course-page-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+
+      background: rgb(247,246,246);
+      border: 2px solid rgb(238,238,238);
+      border-radius: 20px;
+
+      box-shadow: 5px 10px 15px rgba(0,0,0,.10);
+    }
+
+    .course-image img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .course-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .course-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .course-desc {
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .course-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 15px 0 20px;
+    }
+
+    .course-badge {
+      background: rgb(230,240,255);
+      border: 1px solid rgb(200,220,255);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .course-features {
+      background: white;
+      border: 2px solid rgb(238,238,238);
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 15px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      font-size: 14px;
+    }
+
+    .feature-item:not(:last-child) {
+      border-bottom: 1px solid rgb(240,240,240);
+    }
+
+    .feature-icon {
+      width: 22px;
+      height: 22px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: rgb(79,178,61);
+      color: white;
+
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .bottom-section {
+      margin-top: auto;
+    }
+
+    .course-notification {
+      background: rgb(208,232,255);
+      border: 2px solid rgb(238,238,238);
+      border-radius: 20px;
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .course-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .course-price {
+      font-size: 20px;
+      font-weight: bold;
+
+      background: rgb(200,225,249);
+
+      padding: 10px 20px;
+      border-radius: 8px;
+
+      border: 1px solid rgba(0,0,0,.1);
+    }
+
+    .enroll-btn {
+      height: 44px;
+
+      padding: 0 35px;
+
+      border: none;
+      border-radius: 8px;
+
+      background: #4e71a9;
+      color: white;
+
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .enroll-btn:hover {
+      opacity: .9;
+    }
+
+    .back-to-catalog {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: #555;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+
+      .course-page-container {
+        grid-template-columns: 1fr;
+        width: 85%;
+        gap: 20px;
+        margin: 25px auto;
+      }
+
+      body {
+        margin-top: 85px;
+      }
+
+      .course-meta-row {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .enroll-btn {
+        width: 100%;
+      }
+
+      .course-price {
+        width: 100%;
+        text-align: center;
+      }
+
+    }
+
+    .locked-course-content{
+  max-width:900px;
+  margin:30px auto;
+
+  background:white;
+
+  border:2px solid rgb(238,238,238);
+  border-radius:20px;
+
+  padding:25px;
+
+  box-shadow:5px 10px 15px rgba(0,0,0,.08);
+}
+
+.locked-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  font-size:22px;
+  font-weight:700;
+
+  margin-bottom:20px;
+}
+
+.lock-icon{
+  font-size:26px;
+}
+
+.video-container{
+  position:relative;
+  overflow:hidden;
+
+  border-radius:15px;
+}
+
+.video-container iframe{
+  width:100%;
+  height:550px;
+
+  border:none;
+
+  filter:blur(12px);
+  pointer-events:none;
+}
+
+.video-lock-overlay{
+  position:absolute;
+  inset:0;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(3px);
+}
+
+.overlay-box{
+  text-align:center;
+  color:white;
+
+  max-width:400px;
+}
+
+.overlay-lock{
+  font-size:70px;
+  margin-bottom:15px;
+}
+
+.overlay-box h2{
+  margin:0 0 10px;
+}
+
+.overlay-box p{
+  line-height:1.5;
+}
+
+.locked-instructions{
+  margin-top:25px;
+
+  position:relative;
+
+  padding:20px;
+
+  background:rgb(247,247,247);
+
+  border-radius:15px;
+
+  filter:blur(5px);
+
+  user-select:none;
+}
+
+.locked-instructions h3{
+  margin-top:0;
+}
+
+.locked-instructions::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:rgba(255,255,255,.15);
+}
+
+@media(max-width:600px){
+
+  .video-container iframe{
+    height:250px;
+  }
+
+  .locked-course-content{
+    width:85%;
+    padding:15px;
+  }
+
+}
+
+  </style>
+
+</head>
+
+<body>
+
+<a href="product-catalog.html" class="back-to-catalog">
+  ← Back to catalog
+</a>
+
+<main class="course-page-container">
+
+  <div class="course-image">
+    <img id="course-img">
+  </div>
+
+  <div class="course-info">
+
+    <div>
+
+      <h1 id="course-title" class="course-title">
+        Loading...
+      </h1>
+
+      <div class="course-badges">
+
+        <div class="course-badge">
+          🎓 Online Course
+        </div>
+
+        <div class="course-badge">
+          ♾ Lifetime Access
+        </div>
+
+      </div>
+
+      <div id="course-desc" class="course-desc"></div>
+
+      <div class="course-features">
+
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          Step-by-step video lessons
+        </div>
+
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          Instant access after purchase
+        </div>
+
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          Watch on mobile and desktop
+        </div>
+
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          Lifetime access included
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="bottom-section">
+
+      <div class="course-notification">
+        After successful payment you will receive immediate access to all course materials.
+      </div>
+
+      <div class="course-meta-row">
+
+        <div id="course-price" class="course-price"></div>
+
+        <button class="enroll-btn">
+          ENROLL NOW
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+<section class="locked-course-content">
+
+  <div class="locked-header">
+    <span class="lock-icon">🔒</span>
+    Course Content
+  </div>
+
+  <div class="video-container">
+
+    <iframe
+      id="course-video"
+      src=""
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+
+    <div class="video-lock-overlay">
+
+      <div class="overlay-box">
+        <div class="overlay-lock">
+          🔒
+        </div>
+
+        <h2>Premium Content</h2>
+
+        <p>
+          Purchase this course to unlock all lessons,
+          videos and learning materials.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="locked-instructions">
+
+    <h3>Course Instructions</h3>
+
+    <div id="course-instructions">
+      Loading...
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+
+async function loadCourse() {
+
+  const params = new URLSearchParams(window.location.search);
+
+  const id = params.get("id");
+
+  const { data, error } = await window.supabaseClient
+  .from("products")
+  .select("*")
+  .eq("id", id)
+  .eq("type", "course")
+  .single();
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  document.getElementById("course-title").textContent =
+    data.title;
+
+  document.getElementById("course-desc").textContent =
+    data.description;
+
+  document.getElementById("course-price").textContent =
+    "$" + data.price;
+
+  document.getElementById("course-img").src =
+    data.image_url;
+}
+
+loadCourse();
+
+</script>
+
+</body>
+</html>
