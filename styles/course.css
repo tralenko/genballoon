@@ -2,9 +2,9 @@
   width: 93%;
   
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(405px, max-content));
   gap: 45px;
-  justify-content: center;
+  justify-content: start;
   justify-items: center; 
   margin: 20px auto;
 }
@@ -40,7 +40,7 @@
 }
 
 .course-name-box {
-  height: 50px;
+  height: 40px;
   font-weight: bold;
   font-size: 17px;
   margin-top: 10px;
@@ -198,6 +198,8 @@
 @media (max-width: 400px) {
   .catalog-grid {
     gap: 50px;
+    justify-content: center;
+    justify-items: center; 
   }
 
   .course-card {
