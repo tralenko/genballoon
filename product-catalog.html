@@ -17,12 +17,14 @@
     <link rel="stylesheet" href="styles/ad-style.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/product.css">
+    <link rel="stylesheet" href="styles/product-catalog.css">
 
     <link rel="stylesheet" href="styles/added-notification.css">
         
     <script defer src="js/header.js"></script>
-    <script defer src="js/product-card.js"></script>
+    <script defer src="js/product-cart.js"></script>
     <script src="js/cart.js"></script>
+    <script src="js/filter-product.js"></script>
 
   </head>
   <body>
@@ -91,35 +93,45 @@
       </div>
     </header>
 
-    <div class="catalog-name">
-      <p>DIGITAL GOODS</p>
-    </div>
+    <section class="catalog-section">
 
-    <section>
-      <div class="catalog-product-grid"  id="products-container"> 
-      <!--<div class="product-card" data-id="painting-full">
-            <div class="product-thumbnail">
-              <img class="p-thumbnail" src="card thumbnail/thumbnail-2.jpeg">
-            </div>
-            <div class="product-name-box">
-                <p class="product-name">Painting tutorial - full + free gift as digital</p> 
-            </div>
-            <div class="product-description">
-              <div class="p-description-text">
-                <p>Learn how to create stunning decorative </p>
-              </div> 
-            </div>
-            <div class="p-start-course">
-              <a href="product.html?id=painting-full" class="p-buy-link">BUY</a>
-            </div>
-            <div class="p-price-box">
-              <div class="p-price-ammount-box">
-                <p>$4.99</p>
-              </div>
-          </div>-->
+      <div class="catalog-header">
+        <div class="catalog-info">
+          <h1>Digital Goods</h1>
+          <p>
+            Premium balloon tutorials, templates and digital resources
+            for decorators of all skill levels.
+          </p>
         </div>
- 
-      
+
+        <div class="catalog-filters">
+
+          <button class="filter-btn active"
+                  data-filter="all">
+            All
+          </button>
+
+          <button class="filter-btn"
+                  data-filter="patterns">
+            Mosaic Frames Patterns
+          </button>
+
+          <button class="filter-btn"
+                  data-filter="stickers">
+            Stickers Eyes & Mouths
+          </button>
+
+          <button class="filter-btn"
+                  data-filter="art">
+            Balloon Art
+          </button>
+          
+        </div>
+      </div>
+      <div class="catalog-product-grid" id="products-container">
+      </div>
+
+      <div id="load-trigger"></div>
 
     </section>
 
@@ -263,14 +275,50 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  let currentFilter = "all";
+
+  function showSkeletons(count = 12) {
+
+  const container = document.getElementById("products-container");
+
+  container.innerHTML = "";
+
+  for(let i = 0; i < count; i++){
+
+    const skeleton = document.createElement("div");
+
+    skeleton.className = "product-card skeleton-card";
+
+    skeleton.innerHTML = `
+      <div class="skeleton-image"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-line short"></div>
+
+      <div class="skeleton-button"></div>
+
+      <div class="skeleton-button"></div>
+    `;
+
+    container.appendChild(skeleton);
+  }
+}
+
   // --- Загрузка товаров и обработка кликов ---
   async function loadProducts() {
     const container = document.getElementById("products-container");
 
-    const { data, error } = await supabaseClient
-      .from("products")
-      .select("*")
-      .eq("type", "file");
+    showSkeletons();
+
+    let query = supabaseClient
+  .from("products")
+  .select("*")
+  .eq("type", "file");
+
+  if (currentFilter !== "all") {
+  query = query.eq("category", currentFilter);
+  }
+
+const { data, error } = await query;
 
     if (error) {
       console.log("DB error:", error);
@@ -279,9 +327,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     container.innerHTML = "";
 
-    data.forEach(product => {
+    data.forEach((product, index) => {
       const card = document.createElement("div");
-      card.className = "product-card";
+      card.className = "product-card fade-in";
+      card.style.animationDelay = `${index * 70}ms`;
       card.setAttribute("data-id", product.id);
 
       card.innerHTML = `
@@ -358,6 +407,23 @@ document.addEventListener("DOMContentLoaded", () => {
     toast.classList.remove('show');
   }, 2500);
 }
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+
+  btn.addEventListener('click', () => {
+
+    document.querySelectorAll('.filter-btn')
+      .forEach(b => b.classList.remove('active'));
+
+    btn.classList.add('active');
+
+    currentFilter = btn.dataset.filter;
+
+    loadProducts();
+
+  });
+
+});
 
   loadProducts();
 });
