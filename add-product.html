@@ -120,9 +120,21 @@
 
     <input type="text" id="file_url" placeholder="Ссылка на файл / курс">
 
+    <input
+      type="text"
+      id="drive_file_id"
+      placeholder="Google Drive File ID">
+
     <select id="type">
       <option value="file">Цифровой товар</option>
       <option value="course">Курс</option>
+    </select>
+
+    <select id="category" required>
+      <option value="">Выберите категорию</option>
+      <option value="patterns">Patterns</option>
+      <option value="stickers">Stickers</option>
+      <option value="art">Art</option>
     </select>
 
     <button type="submit">Создать товар</button>
@@ -150,7 +162,9 @@
     const price = Number(document.getElementById("price").value);
     const image_url = document.getElementById("image_url").value;
     const file_url = document.getElementById("file_url").value;
+    const drive_file_id = document.getElementById("drive_file_id").value;
     const type = document.getElementById("type").value;
+    const category = document.getElementById("category").value;
 
     // 🚀 отправка в Supabase
     const { data, error } = await supabase
@@ -162,7 +176,8 @@
           price,
           image_url,
           file_url,
-          type
+          type,
+          category
         }
       ])
       .select();
