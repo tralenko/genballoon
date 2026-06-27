@@ -1,26 +1,19 @@
-html,
-body {
-  min-height: 100vh;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-section {
-  flex: 1;
-}
-
 .catalog-product-grid {
   width: 93%;
   max-width: 1500px;
+
   display: grid;
-  grid-template-columns: repeat(auto-fill, 200px);
-  gap: 35px;
-  justify-content: start;
-  justify-items: center; 
-  margin: 20px auto;
+
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+
+  gap: 25px;
+
+  justify-content: center;
+  justify-items: center;
+
+  margin: 0px;
+  margin-top: 2%;
+  margin-left: 2%;
 }
 
 .product-card {
@@ -58,7 +51,7 @@ section {
   height: 40px;
   font-weight: 500;
   font-size: 13px;
-  margin-top: 13px;
+  margin-top: 5px;
   display: flex;
   line-height: 1.2;
   grid-column: span 2;
@@ -82,7 +75,7 @@ section {
   align-items: flex-start;
   justify-content: flex-start;
   
-  padding-top: 5px;
+  padding-top: 5%;
   width: 100%;
 }
 
@@ -95,16 +88,15 @@ section {
   font-size: 14px;
   font-weight: 600;
   color: white;
-  background-color: #4e71a9;
+  background-color: rgb(36, 71, 174);
   width: 110%;
   height: 38px;
   border-radius: 8px;
+  border-width: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  border: none;
-  outline: none;
   cursor: pointer;
 }
 
@@ -120,38 +112,20 @@ section {
 .p-price-ammount-box {
   height: 38px;
   width: 75%;
-  font-weight: bold;
-  font-size: 14px;
-  color: rgb(0, 0, 0);
-  background-color: rgb(200, 225, 249);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  border-style: solid;
+  font-size: 18px;
+  color: black;
+  
+  
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.add-to-cart-btn{
-  transition: transform 0.15s ease;
-}
-
-.add-to-cart-btn:active{
-  transform: scale(0.9);
-}
-
 @media (max-width: 500px) {
-  body {
-    margin-top: 80px;
-  }
-
   .catalog-product-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
     width: 96%;
     margin: 10px auto;
-    justify-content: center;
-    justify-items: center; 
   }
 
   .product-card { 
@@ -191,7 +165,7 @@ section {
   }
 
   .p-price-ammount-box {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     height: 38px;
     width: 75%;
