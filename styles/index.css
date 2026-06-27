@@ -1,0 +1,15 @@
+.section-header {
+  margin-left: 5%;
+}
+
+.topic{
+  height: 30px;
+  font-size: 30px;
+  color: #000000;
+  text-align: center;
+  margin: 0px;
+}
+
+.topic p{
+  margin: 0px;
+}
