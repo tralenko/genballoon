@@ -1,0 +1,217 @@
+.course-areas{
+  width:90%;
+  max-width:1400px;
+  margin:50px auto;
+
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:28px;
+}
+
+.course-area-card{
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:25px;
+
+  padding:30px;
+
+  background:white;
+
+  border-radius:32px;
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.08);
+
+  transition:.25s;
+
+  overflow:hidden;
+}
+
+.course-area-card:hover{
+  transform:translateY(-5px);
+}
+
+.course-area-content{
+  flex:1;
+}
+
+.course-tag{
+
+  display:inline-block;
+
+  padding:8px 14px;
+
+  border-radius:999px;
+
+  background:#f5e2fb;
+  color:#d048f9;
+
+  font-size:13px;
+  font-weight:600;
+
+  margin-bottom:16px;
+}
+
+.course-area-content h3{
+  font-size:30px;
+  margin:0 0 14px;
+}
+
+.course-area-content p{
+  color:#666;
+  line-height:1.7;
+}
+
+.certificate-card{
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  margin:24px 0;
+
+  padding:14px;
+
+  background:#f8f9fb;
+
+  border-radius:18px;
+}
+
+.certificate-icon{
+
+  width:42px;
+  height:42px;
+
+  border-radius:50%;
+
+  background:#0A66C2;
+  color:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:700;
+  font-size:18px;
+}
+
+.certificate-card strong{
+  display:block;
+  margin-bottom:3px;
+}
+
+.certificate-card p{
+  margin:0;
+  font-size:14px;
+}
+
+.course-area-image{
+
+  width:220px;
+  height:220px;
+
+  flex-shrink:0;
+
+  border-radius:24px;
+
+  overflow:hidden;
+}
+
+.course-area-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.showcase-primary{
+  font-size:16px;
+}
+
+@media (max-width:900px){
+
+  .course-areas{
+    grid-template-columns:1fr;
+    width:92%;
+    gap:18px;
+  }
+
+  .course-area-card{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+
+    padding:18px;
+    gap:16px;
+
+    width:100%;
+    margin:0;
+    border-radius:24px;
+  }
+
+  .course-area-content{
+    flex:1;
+    min-width:0;
+  }
+
+  .course-area-content h3{
+    font-size:22px;
+    margin-bottom:10px;
+  }
+
+  .course-area-content p{
+    font-size:14px;
+    line-height:1.5;
+  }
+
+  .course-tag{
+    font-size:12px;
+    padding:6px 12px;
+    margin-bottom:12px;
+  }
+
+  .certificate-card{
+    gap:8px;
+    padding:8px 10px;
+    margin:14px 0;
+    border-radius:12px;
+  }
+
+  .certificate-icon{
+    width:26px;
+    height:26px;
+    font-size:12px;
+    flex-shrink:0;
+  }
+
+  .certificate-card strong{
+    font-size:12px;
+    font-weight:600;
+    margin:0;
+    line-height:1.2;
+  }
+
+  .certificate-card p{
+    font-size:12px;
+    line-height:1.4;
+  }
+
+  .course-area-image{
+    width:140px;
+    height:140px;
+    flex-shrink:0;
+    border-radius:18px;
+  }
+
+  .certificate-card p{
+    display:none;
+  }
+
+  .showcase-primary{
+    height:40px;
+    padding:0 20px;
+    font-size:14px;
+  }
+}
