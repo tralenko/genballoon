@@ -17,9 +17,19 @@
 
     <link rel="stylesheet" href="styles/hero-block.css">
     <link rel="stylesheet" href="styles/update.css">
+    <link rel="stylesheet" href="styles/product.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/showcase-test.css">
+    <link rel="stylesheet" href="styles/dividing-line.css">
+    <link rel="stylesheet" href="styles/course-areas.css">
 
     <script defer src="js/header.js"></script>
     <script defer src="js/confetti.js"></script>
+    <script src="js/cart.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script defer src="js/home-products.js"></script>
   </head>
   <body>
     <header class="header">
@@ -74,41 +84,25 @@
           </button>
       </div>
     </header>
-    
-    <section class="hero">
 
-    <div class="hero-container">
+  <section class="showcase-section">
+  
+    <div class="showcase-left">
+  
+      <span class="showcase-badge">
+        New Experience
+      </span>
+  
+      <h2>
+        Learn Balloon design professionally
+      </h2>
+  
+      <p>
+        Generate unique balloon creations, customize colors,
+        add effects and download high-quality assets instantly.
+      </p>
 
-      <!-- LEFT -->
-      <div class="hero-left">
-
-       <!-- <div class="hero-badge">
-          🎈 ONLINE COURSES FOR BALLOON ARTISTS
-        </div> --> 
-        <h1 class="hero-title">
-          Learn Balloon Design
-          <span>Professionally</span>
-        </h1>
-
-        <p class="hero-text">
-          Step-by-step video courses for beginners and professionals.
-          Create stunning balloon decorations and grow your business.
-        </p>
-
-        <div class="hero-buttons">
-
-          <button class="btn btn-primary">
-            EXPLORE COURSES
-          </button>
-
-          <button class="btn btn-secondary">
-            WATCH DIGITAL GOODS
-          </button>
-
-        </div>
-
-        <!-- STUDENTS -->
-        <div class="students">
+      <div class="students">
 
           <div class="student-avatars">
 
@@ -125,21 +119,256 @@
           </div>
 
         </div>
-
+  
+      <div class="showcase-buttons">
+        <button class="showcase-primary">
+          Explore Courses
+        </button>
+  
+        <button class="showcase-secondary">
+          Digital Goods
+        </button>
       </div>
 
-      <!-- RIGHT -->
-      <div class="hero-right">
+    </div>
+  
+    <div class="showcase-right">
+  
+      <div class="showcase-video-box">
+  
+        <video autoplay muted loop playsinline class="showcase-video">
+  
+          <source src="videos/balloons-demo.mp4" type="video/mp4">
+  
+        </video>
+  
+      </div>
+  
+    </div>
+  
+  </section>
 
-        <div class="hero-image">
-          <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=1200&auto=format&fit=crop" alt="">
+  <section class="dividing line">
+    <div class="wave-divider">
+  <svg viewBox="0 0 1200 80" preserveAspectRatio="none">
+    <path
+      d="M20 40
+         C300 5, 900 75, 1180 40"
+      class="wave-line"
+    />
+  </svg>
+</div>
+  </section>
+
+  <div class="topic">
+    <p>Course Areas</p>
+  </div>
+
+  <section class="course-areas">
+
+  <div class="course-area-card">
+
+    <div class="course-area-image">
+      <img src="/mosaic.webp" alt="Mosaic Frames">
+    </div>
+
+    <div class="course-area-content">
+
+      <span class="course-tag">
+        Professional Course
+      </span>
+
+      <h3>Mosaic Frames</h3>
+
+      <p>
+        Learn how to create professional mosaic balloon frames for
+        birthdays, weddings, corporate events and luxury decorations.
+      </p>
+
+      <div class="certificate-card">
+
+        <div class="certificate-icon">
+          ✓
+        </div>
+
+        <div>
+          <strong>Professional Certificate</strong>
+          <p>Suitable for LinkedIn profile</p>
         </div>
 
       </div>
 
+      <button class="showcase-primary">
+        Learn More
+      </button>
+
     </div>
 
-  </section>
+    
+
+  </div>
+
+  <div class="course-area-card">
+
+    <div class="course-area-image">
+      <img src="/bobo.webp" alt="Bobo Balloons">
+    </div>
+
+    <div class="course-area-content">
+
+      <span class="course-tag">
+        Professional Course
+      </span>
+
+      <h3>Bobo Balloons</h3>
+
+      <p>
+        Master transparent Bobo balloon decorations, lighting effects
+        and premium event installations.
+      </p>
+
+      <div class="certificate-card">
+
+        <div class="certificate-icon">
+          ✓
+        </div>
+
+        <div>
+          <strong>Professional Certificate</strong>
+          <p>Suitable for LinkedIn profile</p>
+        </div>
+
+      </div>
+
+      <button class="showcase-primary">
+        Learn More
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="course-area-card">
+
+    <div class="course-area-image">
+      <img src="/balloon-design.webp" alt="Balloon Art">
+    </div>
+
+    <div class="course-area-content">
+
+      <span class="course-tag">
+        Professional Course
+      </span>
+
+      <h3>Balloon Art</h3>
+
+      <p>
+        Create stunning balloon sculptures, figures and artistic
+        installations for events and exhibitions.
+      </p>
+
+      <div class="certificate-card">
+
+        <div class="certificate-icon">
+          ✓
+        </div>
+
+        <div>
+          <strong>Professional Certificate</strong>
+          <p>Suitable for LinkedIn profile</p>
+        </div>
+
+      </div>
+
+      <button class="showcase-primary">
+        Learn More
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="course-area-card">
+
+    <div class="course-area-image">
+      <img src="/digital.webp" alt="Digital Products">
+    </div>
+
+    <div class="course-area-content">
+
+      <span class="course-tag">
+        Professional Course
+      </span>
+
+      <h3>Digital Products Creation</h3>
+
+      <p>
+        Learn to create templates, guides, PDFs and digital products
+        for balloon professionals.
+      </p>
+
+      <div class="certificate-card">
+
+        <div class="certificate-icon">
+          ✓
+        </div>
+
+        <div>
+          <strong>Professional Certificate</strong>
+          <p>Suitable for LinkedIn profile</p>
+        </div>
+
+      </div>
+
+      <button class="showcase-primary">
+        Learn More
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="course-area-card">
+
+    <div class="course-area-image">
+      <img src="/tool.webp" alt="Tools & Equipment">
+    </div>
+
+    <div class="course-area-content">
+
+      <span class="course-tag">
+        Professional Course
+      </span>
+
+      <h3>Tools & Equipment</h3>
+
+      <p>
+        Understand professional tools, inflation systems and equipment
+        used by successful balloon decorators.
+      </p>
+
+      <div class="certificate-card">
+
+        <div class="certificate-icon">
+          ✓
+        </div>
+
+        <div>
+          <strong>Professional Certificate</strong>
+          <p>Suitable for LinkedIn profile</p>
+        </div>
+
+      </div>
+
+      <button class="showcase-primary">
+        Learn More
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
 
   <section class="updates-section">
 
@@ -183,180 +412,27 @@
 
 </section>
 
-    <section>
-      <div class="catalog-grid">
-        <div class="course-card">
-          <div class="course-thumbnail">
-            <img class="thumbnail" src="card thumbnail/thumbnail-2.jpeg">
-          </div>
-          <div class="course-name-box">
-              <p class="course-name">Painting tutorial - full + free gift as digital</p> 
-          </div>
-          <div class="price-box">
-            <div class="price-ammount-box">
-              <p>$4.99</p>
-            </div>
-          </div>
-          <div class="teg-box">
-            <div class="teg-1">
-              <div class="teg-1-text">
-                <img src="icons/video.png">
-                <p>DIGITAL COURSE</p>
-              </div>
-            </div>
-            <div class="teg-2">
-             <div class="teg-2-text">
-                <p>STEP-BY-STEP-LESSON</p>
-              </div>
-            </div>
-            <div class="teg-3">
-              <div class="teg-3-text">
-                <p>FREE GIFT INCLUDED</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="course-description">
-            <div class="description-text">
-              <p>Learn how to create stunning decorative balloon arrangements with Bobo balloons in this step-by-step video
-                tutorial!”</p>
-            </div>
-          </div>
-          <div class="start-course">
-            <button class="start-button">ADD TO CART</button>
-          </div>
-        </div>
+    <section class="featured-products">
+  <div class="section-header">
+    <h2>Featured Courses</h2>
+    <button onclick="location.href='course-catalog.html'">
+      View All
+    </button>
+  </div>
 
-        <div class="course-card">
-          <div class="course-thumbnail">
-            <img class="thumbnail" src="card thumbnail/thumbnail-2.jpeg">
-          </div>
-          <div class="course-name-box">
-              <p class="course-name">Painting tutorial - full + free gift as digital</p> 
-          </div>
-          <div class="price-box">
-            <div class="price-ammount-box">
-              <p>$4.99</p>
-            </div>
-          </div>
-          <div class="teg-box">
-            <div class="teg-1">
-              <div class="teg-1-text">
-                <img src="icons/video.png">
-                <p>DIGITAL COURSE</p>
-              </div>
-            </div>
-            <div class="teg-2">
-             <div class="teg-2-text">
-                <p>STEP-BY-STEP-LESSON</p>
-              </div>
-            </div>
-            <div class="teg-3">
-              <div class="teg-3-text">
-                <p>FREE GIFT INCLUDED</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="course-description">
-            <div class="description-text">
-              <p>Learn how to create stunning decorative balloon arrangements with Bobo balloons in this step-by-step video
-                tutorial! In this lesson, you will discover how to properly inflate transparent Bobo balloons, add lights or
-                smaller balloons inside.”</p>
-            </div>
-          </div>
-          <div class="start-course">
-            <button class="start-button">ADD TO CART</button>
-          </div>
-        </div>
+  <div id="featured-courses" class="catalog-grid"></div>
+</section>
 
-        <div class="course-card">
-          <div class="course-thumbnail">
-            <img class="thumbnail" src="card thumbnail/thumbnail-2.jpeg">
-          </div>
-          <div class="course-name-box">
-              <p class="course-name">Painting tutorial - full + free gift as digital</p> 
-          </div>
-          <div class="price-box">
-            <div class="price-ammount-box">
-              <p>$4.99</p>
-            </div>
-          </div>
-          <div class="teg-box">
-            <div class="teg-1">
-              <div class="teg-1-text">
-                <img src="icons/video.png">
-                <p>DIGITAL COURSE</p>
-              </div>
-            </div>
-            <div class="teg-2">
-             <div class="teg-2-text">
-                <p>STEP-BY-STEP-LESSON</p>
-              </div>
-            </div>
-            <div class="teg-3">
-              <div class="teg-3-text">
-                <p>FREE GIFT INCLUDED</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="course-description">
-            <div class="description-text">
-              <p>Learn how to create stunning decorative balloon arrangements with Bobo balloons in this step-by-step video
-                tutorial! In this lesson, you will discover how to properly inflate transparent Bobo balloons, add lights or
-                smaller balloons inside.”</p>
-            </div>
-          </div>
-          <div class="start-course">
-            <button class="start-button">ADD TO CART</button>
-          </div>
-        </div>
+<section class="featured-products">
+  <div class="section-header">
+    <h2>Digital Goods</h2>
+    <button onclick="location.href='product-catalog.html'">
+      View All
+    </button>
+  </div>
 
-        <div class="course-card">
-          <div class="course-thumbnail">
-            <img class="thumbnail" src="card thumbnail/thumbnail-2.jpeg">
-          </div>
-          <div class="course-name-box">
-              <p class="course-name">Painting tutorial - full + free gift as digital</p> 
-          </div>
-          <div class="price-box">
-            <div class="price-ammount-box">
-              <p>$4.99</p>
-            </div>
-          </div>
-          <div class="teg-box">
-            <div class="teg-1">
-              <div class="teg-1-text">
-                <img src="icons/video.png">
-                <p>DIGITAL COURSE</p>
-              </div>
-            </div>
-            <div class="teg-2">
-             <div class="teg-2-text">
-                <p>STEP-BY-STEP-LESSON</p>
-              </div>
-            </div>
-            <div class="teg-3">
-              <div class="teg-3-text">
-                <p>FREE GIFT INCLUDED</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="course-description">
-            <div class="description-text">
-              <p>Learn how to create stunning decorative balloon arrangements with Bobo balloons in this step-by-step video
-                tutorial! In this lesson, you will discover how to properly inflate transparent Bobo balloons, add lights or
-                smaller balloons inside.”</p>
-            </div>
-          </div>
-          <div class="start-course">
-            <button class="start-button">ADD TO CART</button>
-          </div>
-        </div>
-
-    </section>
+  <div id="featured-files" class="catalog-product-grid"></div>
+</section>
 
 
     <section class="digital-goods-preview">
