@@ -25,7 +25,7 @@
 
     <script defer src="js/header.js"></script>
     <script defer src="js/confetti.js"></script>
-    <script src="js/cart.js"></script>
+    <script defer src="js/cart.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
@@ -79,9 +79,10 @@
         </div>
       </div>
       <div class="cart">
-        <button class="cart-button">
-         <img src="icons/cart-2.png"> 
-          </button>
+        <button class="cart-button" onclick="window.location.href='cart.html'">
+          <img src="icons/cart-2.png">
+          <span class="cart-badge">0</span>
+        </button>
       </div>
     </header>
 
@@ -169,7 +170,7 @@
   <div class="course-area-card">
 
     <div class="course-area-image">
-      <img src="mosaic.webp" alt="Mosaic Frames">
+      <img src="/mosaic.webp" alt="Mosaic Frames">
     </div>
 
     <div class="course-area-content">
@@ -198,8 +199,8 @@
 
       </div>
 
-      <button class="showcase-primary">
-        Learn More
+      <button class="showcase-primary" onclick="location.href='course.html?slug=mosaic-frames'">
+          Learn More
       </button>
 
     </div>
@@ -211,7 +212,7 @@
   <div class="course-area-card">
 
     <div class="course-area-image">
-      <img src="bobo.webp" alt="Bobo Balloons">
+      <img src="/bobo.webp" alt="Bobo Balloons">
     </div>
 
     <div class="course-area-content">
@@ -251,7 +252,7 @@
   <div class="course-area-card">
 
     <div class="course-area-image">
-      <img src="balloon-design.webp" alt="Balloon Art">
+      <img src="/balloon-design.webp" alt="Balloon Art">
     </div>
 
     <div class="course-area-content">
@@ -291,7 +292,7 @@
   <div class="course-area-card">
 
     <div class="course-area-image">
-      <img src="digital.webp" alt="Digital Products">
+      <img src="/digital.webp" alt="Digital Products">
     </div>
 
     <div class="course-area-content">
@@ -331,7 +332,7 @@
   <div class="course-area-card">
 
     <div class="course-area-image">
-      <img src="tool.webp" alt="Tools & Equipment">
+      <img src="/tool.webp" alt="Tools & Equipment">
     </div>
 
     <div class="course-area-content">
