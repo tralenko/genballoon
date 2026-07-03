@@ -1,23 +1,24 @@
-header {
-  height: 90px;
-  
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+header{
+  height: 78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
 
-  padding-top: 0;
+  padding:0 22px;
 
-  z-index: 100;
+  z-index:100;
 
-  background-color: rgb(255, 255, 255);
-  /*border-radius: 0px 0px 15px 15px;
-  box-shadow: 5px 5px 5px 5px rgba(-10, 0.15, 0.15, 0.08);*/
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(12px);
+
+  border-bottom:1px solid rgba(0,0,0,0.06);
+
+  box-shadow:0 10px 30px rgba(0,0,0,0.04);
 }
 
 .header-burger-btn {
@@ -156,7 +157,7 @@ header {
   justify-content: center;
   width: 55px;
   height: 60px;
-  background-color: rgb(234, 234, 234);
+  background-color: rgb(255, 255, 255);
   border-width: 0;
   border-radius: 15px;
   margin-left: 12px;
@@ -166,15 +167,15 @@ header {
 }
 
 .menu-button img{
-  height: 30px;
+  height: 23px;
 }
 
 .menu-button:hover {
-  background-color: rgb(252, 225, 157);
+  background-color: #f5e2fb;
 }
 
 .menu-button.active {
-  background-color: rgb(252, 225, 157); 
+  background-color: #f5e2fb; 
   cursor: default; 
 }
 
@@ -193,7 +194,7 @@ header {
 }
 
 .cart-button {
-  width: 55px;
+  width: 60px;
   height: 60px;
   font-size: 9px;
   font-weight: 700;
@@ -213,7 +214,21 @@ header {
 }
 
 .cart-button img {
-  height: 30px;
+  height: 23px;
+}
+
+.cart-badge {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0px;
+  color: #111;
+  font-size: 20px;
+  font-weight: 500;
+  pointer-events: none;
+  line-height: 1;
+  padding-right: 10px;
 }
 
 @media (max-width: 900px) {
