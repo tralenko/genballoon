@@ -28,7 +28,7 @@ header{
   height: 40px;
   border: none;
   background-color: transparent;
-  margin-left: 22px;
+  margin-left: 2px;
   z-index: 2;
 
   -webkit-tap-highlight-color: transparent;
@@ -254,6 +254,7 @@ header{
 
   .cart {
     width: 140px;
+    justify-content: flex-end;
   }
 
   .profile-button {
