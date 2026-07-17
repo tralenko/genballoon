@@ -293,6 +293,26 @@ header{
 }
 
 @media (max-width: 900px) {
+  .menu-button::after{
+  left: 0px;
+  top: 50%;
+  bottom: auto;
+
+  width: 4px;
+  height: 70%;
+
+  transform: translateY(-50%) scaleY(0);
+  transform-origin: center;
+  }
+
+  .menu-button:hover::after{
+    transform: translateY(-50%) scaleY(1);
+  }
+
+  .menu-button.active::after{
+    transform: translateY(-50%) scaleY(1);
+  }
+
   header {
     height: 75px;
   }
