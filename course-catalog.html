@@ -14,8 +14,17 @@
     <link rel="stylesheet" href="styles/ad-style.css">
     <link rel="stylesheet" href="styles/course.css">
     <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/course-catalog.css">
+    <link rel="stylesheet" href="styles/course-areas.css">
+    <link rel="stylesheet" href="styles/course-nav.css">
+    <link rel="stylesheet" href="styles/showcase-test.css">
     
     <script defer src="js/header.js"></script>
+    <script defer src="js/cart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth-menu.js"></script>
+    <script src="js/course-nav.js"></script>
   </head>
   <body>
     <header class="header">
@@ -24,12 +33,13 @@
       </button>
       <div class="logo" id="logo">
         <div>
-          <div class="logo-txt">
+          <img src="icons/logo.jpeg" alt="GenSpace Logo" class="logo-img">
+          <!--<div class="logo-txt">
             <p>GEN</p>
-          </div>
+          </div>-->
         </div>
         <div class="page-name">
-          <p>LEARN</p>
+          <p>Balloon</p>
         </div>
       </div>
       <div class="menu-buttons-row">
@@ -45,31 +55,354 @@
             SHOP
           </button>
       </div>
-        <div class="menu-button-box">
-          <button class="menu-button" onclick="window.location.href='course-catalog.html';">
-            <img src="icons/courses.png">
+      <div class="menu-button-box education-icon">
+          <button class="menu-button menu-button-education" onclick="window.location.href='course-catalog.html';">
+            <img src="icons/education.webp">
             COURSES
           </button>
         </div>
         <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='lessons-catalog.html';">
+            <img src="icons/courses.png">
+            LESSONS
+          </button>
+        </div>
+        <div class="menu-button-box" onclick="window.location.href='support.html';">
           <button class="menu-button">
             <img src="icons/support.png">
             SUPPORT
           </button>
         </div>
         <div class="menu-button-box">
-          <button class="menu-button" onclick="window.location.href='auth.html';">
-            <img src="icons/log in.png">
-            LOG IN
-          </button>
+            <button class="menu-button" id="auth-menu-button">
+                <img id="auth-menu-icon" src="icons/log in.png">
+                <span id="auth-menu-text">LOG IN</span>
+            </button>
         </div>
       </div>
       <div class="cart">
-        <button class="cart-button">
-         <img src="icons/cart-3.png"> 
-          </button>
+        <button class="cart-button" onclick="window.location.href='cart.html'">
+          <img src="icons/cart-2.png">
+          <span class="cart-badge">0</span>
+        </button>
       </div>
     </header>
+
+    <section class="area-name">
+      <div>
+      <p>Certified courses</p>
+    </div>
+    </section>
+    
+
+  <section class="course-areas">
+
+  <div class="course-area-card">
+
+    <div class="course-area-image">
+      <img src="/mosaic.webp" alt="Mosaic Frames">
+    </div>
+
+    <div class="course-area-content">
+
+      <span class="course-tag">
+        Professional Course
+      </span>
+
+      <h3>Mosaic Frames</h3>
+
+      <p>
+        Learn how to create professional mosaic balloon frames for
+        birthdays, weddings, corporate events and luxury decorations.
+      </p>
+
+      <div class="certificate-card">
+
+        <div class="certificate-icon">
+          ✓
+        </div>
+
+        <div>
+          <strong>Professional Certificate</strong>
+          <p>Suitable for LinkedIn profile</p>
+        </div>
+
+      </div>
+
+      <div class="course-actions">
+      
+        <button class="showcase-primary" onclick="location.href='course.html?slug=mosaic-frames'">
+          Learn More
+        </button>
+      
+        <div class="course-price">
+      
+          <span class="old-price">$99</span>
+      
+          <span class="new-price">$49</span>
+      
+        </div>
+
+      </div>
+
+    </div>
+
+    
+
+  </div>
+
+  <div class="course-area-card">
+
+    <div class="course-area-image">
+      <img src="/bobo.webp" alt="Bobo Balloons">
+    </div>
+
+    <div class="course-area-content">
+
+      <span class="course-tag">
+        Professional Course
+      </span>
+
+      <h3>Bobo Balloons</h3>
+
+      <p>
+        Master transparent Bobo balloon decorations, lighting effects
+        and premium event installations.
+      </p>
+
+      <div class="certificate-card">
+
+        <div class="certificate-icon">
+          ✓
+        </div>
+
+        <div>
+          <strong>Professional Certificate</strong>
+          <p>Suitable for LinkedIn profile</p>
+        </div>
+
+      </div>
+
+      <div class="course-actions">
+      
+        <button class="showcase-primary">
+          Learn More
+        </button>
+      
+        <div class="course-price">
+      
+          <span class="old-price">$99</span>
+      
+          <span class="new-price">$49</span>
+      
+        </div>
+      
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="course-area-card">
+
+    <div class="course-area-image">
+      <img src="/balloon-design.webp" alt="Balloon Art">
+    </div>
+
+    <div class="course-area-content">
+
+      <span class="course-tag">
+        Professional Course
+      </span>
+
+      <h3>Balloon Art</h3>
+
+      <p>
+        Create stunning balloon sculptures, figures and artistic
+        installations for events and exhibitions.
+      </p>
+
+      <div class="certificate-card">
+
+        <div class="certificate-icon">
+          ✓
+        </div>
+
+        <div>
+          <strong>Professional Certificate</strong>
+          <p>Suitable for LinkedIn profile</p>
+        </div>
+
+      </div>
+
+      <div class="course-actions">
+      
+        <button class="showcase-primary">
+          Learn More
+        </button>
+      
+        <div class="course-price">
+      
+          <span class="old-price">$99</span>
+      
+          <span class="new-price">$49</span>
+      
+        </div>
+      
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="course-area-card">
+
+    <div class="course-area-image">
+      <img src="/digital.webp" alt="Digital Products">
+    </div>
+
+    <div class="course-area-content">
+
+      <span class="course-tag">
+        Professional Course
+      </span>
+
+      <h3>Digital Products Creation</h3>
+
+      <p>
+        Learn to create templates, guides, PDFs and digital products
+        for balloon professionals.
+      </p>
+
+      <div class="certificate-card">
+
+        <div class="certificate-icon">
+          ✓
+        </div>
+
+        <div>
+          <strong>Professional Certificate</strong>
+          <p>Suitable for LinkedIn profile</p>
+        </div>
+
+      </div>
+
+      <div class="course-actions">
+      
+        <button class="showcase-primary">
+          Learn More
+        </button>
+      
+        <div class="course-price">
+      
+          <span class="old-price">$99</span>
+      
+          <span class="new-price">$49</span>
+      
+        </div>
+      
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="course-area-card">
+
+    <div class="course-area-image">
+      <img src="/tool.webp" alt="Tools & Equipment">
+    </div>
+
+    <div class="course-area-content">
+
+      <span class="course-tag">
+        Professional Course
+      </span>
+
+      <h3>Tools & Equipment</h3>
+
+      <p>
+        Understand professional tools, inflation systems and equipment
+        used by successful balloon decorators.
+      </p>
+
+      <div class="certificate-card">
+
+        <div class="certificate-icon">
+          ✓
+        </div>
+
+        <div>
+          <strong>Professional Certificate</strong>
+          <p>Suitable for LinkedIn profile</p>
+        </div>
+
+      </div>
+
+      <div class="course-actions">
+      
+        <button class="showcase-primary" onclick="location.href='course.html?slug=mosaic-frames'">
+          Learn More
+        </button>
+      
+        <div class="course-price">
+      
+          <span class="old-price">$99</span>
+      
+          <span class="new-price">$49</span>
+      
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+    <section class="course-catalog-section">
+
+  <div class="course-catalog-header">
+
+    <div class="course-catalog-info">
+      <h1>Online Courses</h1>
+      <p>
+        Professional balloon decorating courses for beginners and experienced artists.
+      </p>
+    </div>
+
+    <div class="course-catalog-filters">
+
+      <button class="course-filter-btn active" data-filter="all">
+        All
+      </button>
+
+      <button class="course-filter-btn" data-filter="beginner">
+        Beginner
+      </button>
+
+      <button class="course-filter-btn" data-filter="advanced">
+        Advanced
+      </button>
+
+      <button class="course-filter-btn" data-filter="business">
+        Business
+      </button>
+
+      <button class="course-filter-btn" data-filter="masterclass">
+        Masterclass
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="catalog-grid" id="courses-container"></div>
+
+  <div id="load-trigger"></div>
+
+</section>
 
     <div class="catalog-name">
       <p>COURSES</p>
@@ -208,6 +541,206 @@
     </footer>
 
     <script>
+      document.addEventListener("DOMContentLoaded", () => {
+
+  // Активная кнопка меню
+  const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+
+  document.querySelectorAll('.menu-button').forEach(button => {
+    const onclick = button.getAttribute('onclick');
+    if (onclick && onclick.includes(currentFile)) {
+      button.classList.add('active');
+    }
+  });
+
+  let currentFilter = "all";
+
+  function showSkeletons(count = 12) {
+
+    const container = document.getElementById("courses-container");
+
+    container.innerHTML = "";
+
+    for (let i = 0; i < count; i++) {
+
+      const skeleton = document.createElement("div");
+
+      skeleton.className = "course-card course-skeleton-card";
+
+      skeleton.innerHTML = `
+        <div class="course-skeleton-image"></div>
+        <div class="course-skeleton-line"></div>
+        <div class="course-skeleton-line short"></div>
+        <div class="course-skeleton-button"></div>
+        <div class="course-skeleton-button"></div>
+      `;
+
+      container.appendChild(skeleton);
+    }
+  }
+
+  async function loadCourses() {
+
+    const container = document.getElementById("courses-container");
+
+    showSkeletons();
+
+    let query = supabaseClient
+      .from("products")
+      .select("*")
+      .eq("type", "course");
+
+    if (currentFilter !== "all") {
+      query = query.eq("category", currentFilter);
+    }
+
+    const { data, error } = await query.order("id", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      container.innerHTML = "";
+      return;
+    }
+
+    container.innerHTML = "";
+
+    data.forEach((course, index) => {
+
+      const card = document.createElement("div");
+
+      card.className = "course-card course-fade-in";
+      card.style.animationDelay = `${index * 70}ms`;
+      card.dataset.id = course.id;
+
+      card.innerHTML = `
+  <div class="course-thumbnail">
+    <img
+      class="thumbnail"
+      src="${course.image_url || ''}"
+      alt="${course.title}">
+  </div>
+
+  <div class="course-name-box">
+    <p class="course-name">
+      ${course.title}
+    </p>
+  </div>
+
+  <div class="teg-box">
+
+    <div class="teg-1">
+      <div class="teg-1-text">
+        <img src="icons/video.png">
+        <p>DIGITAL COURSE</p>
+      </div>
+    </div>
+
+    <div class="teg-2">
+      <div class="teg-2-text">
+        <p>STEP-BY-STEP LESSON</p>
+      </div>
+    </div>
+
+    <div class="teg-3">
+      <div class="teg-3-text">
+        <p>FREE GIFT INCLUDED</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="course-description">
+    <div class="description-text">
+      <p>${course.description || ""}</p>
+    </div>
+  </div>
+
+  <div class="start-course">
+    <button
+      class="start-button add-to-cart-btn"
+      data-id="${course.id}"
+      data-title="${course.title}"
+      data-price="${course.price}"
+      data-image="${course.image_url || ''}">
+      ADD TO CART
+    </button>
+  </div>
+
+  <div class="price-box">
+    <div class="price-ammount-box">
+      <p>$${Number(course.price)}</p>
+    </div>
+  </div>
+    `;
+    
+
+      container.appendChild(card);
+    });
+
+  }
+
+  function showCartToast() {
+
+    const toast = document.getElementById("cart-toast");
+
+    if (!toast) return;
+
+    toast.classList.add("show");
+
+    clearTimeout(toast.hideTimer);
+
+    toast.hideTimer = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2500);
+  }
+
+  document.getElementById("courses-container").addEventListener("click", (e) => {
+
+    const btn = e.target.closest(".add-to-cart-btn");
+
+    if (btn) {
+
+      addToCart({
+        id: btn.dataset.id,
+        title: btn.dataset.title,
+        price: btn.dataset.price,
+        image_url: btn.dataset.image
+      });
+
+      showCartToast();
+      return;
+    }
+
+    const card = e.target.closest(".course-card");
+
+    if (!card) return;
+
+    window.location.href = `course.html?id=${card.dataset.id}`;
+  });
+
+  document.querySelectorAll(".course-filter-btn").forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+      document.querySelectorAll(".course-filter-btn")
+        .forEach(b => b.classList.remove("active"));
+
+      btn.classList.add("active");
+
+      currentFilter = btn.dataset.filter;
+
+      loadCourses();
+
+    });
+
+  });
+
+  loadCourses();
+
+});
+    </script>
+
+    <script>
     document.addEventListener("DOMContentLoaded", () => {
       // Получаем имя текущего файла из адресной строки (например, 'product-catalog.html')
       // Если открыта главная папка, по умолчанию считаем, что это 'index.html'
@@ -226,100 +759,5 @@
       });
     });
     </script>
-
-    <script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-const supabaseUrl = "https://dnfzmmytdonyrrzdxnzb.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRuZnptbXl0ZG9ueXJyemR4bnpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyODE3NTUsImV4cCI6MjA5NTg1Nzc1NX0.HlCNlOancnoiEknx81YN5_ALTsdmTY6mwn9P3RxnkiY";
-
-const supabase = createClient(
-  supabaseUrl,
-  supabaseKey
-);
-
-const container = document.getElementById("coursesContainer");
-
-async function loadCourses() {
-
-  const { data: courses, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("type", "course")
-    .order("id", { ascending: false });
-
-  if (error) {
-    console.error(error);
-    return;
-  }
-
-  container.innerHTML = courses.map(course => `
-  
-    <div class="course-card">
-
-      <div class="course-thumbnail">
-        <img
-          class="thumbnail"
-          src="${course.image_url || ''}"
-          alt="${course.title}">
-      </div>
-
-      <div class="course-name-box">
-        <p class="course-name">
-          ${course.title}
-        </p>
-      </div>
-
-      <div class="price-box">
-        <div class="price-ammount-box">
-          <p>$${Number(course.price || 0).toFixed(2)}</p>
-        </div>
-      </div>
-
-      <div class="teg-box">
-
-        <div class="teg-1">
-          <div class="teg-1-text">
-            <img src="icons/video.png">
-            <p>DIGITAL COURSE</p>
-          </div>
-        </div>
-
-        <div class="teg-2">
-          <div class="teg-2-text">
-            <p>STEP-BY-STEP-LESSON</p>
-          </div>
-        </div>
-
-        <div class="teg-3">
-          <div class="teg-3-text">
-            <p>FREE GIFT INCLUDED</p>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="course-description">
-        <div class="description-text">
-          <p>${course.description || ""}</p>
-        </div>
-      </div>
-
-      <div class="start-course">
-        <button
-          class="start-button" onclick="window.location.href='course.html?id=${course.id}'"
-          data-id="${course.id}">
-          ADD TO CART
-        </button>
-      </div>
-
-    </div>
-
-  `).join("");
-
-}
-
-loadCourses();
-</script>
   </body>
 </html>
