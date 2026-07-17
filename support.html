@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Support | GEN BALLOON</title>
+
+<link rel="stylesheet" href="styles/general.css">
+<link rel="stylesheet" href="styles/header.css">
+<link rel="stylesheet" href="styles/support.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/auth-menu.js"></script>
+
+</head>
+
+<body>
+
+<header class="header">
+      <button class="header-burger-btn" id="burger">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="logo" id="logo">
+        <div>
+          <img src="icons/logo.jpeg" alt="GenSpace Logo" class="logo-img">
+          <!--<div class="logo-txt">
+            <p>GEN</p>
+          </div>-->
+        </div>
+        <div class="page-name">
+          <p>Balloon</p>
+        </div>
+      </div>
+      <div class="menu-buttons-row">
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='index.html';">
+            <img src="icons/home.png">
+            HOME
+          </button>
+        </div>
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='product-catalog.html';">
+            <img src="icons/shop.png">
+            SHOP
+          </button>
+      </div>
+      <div class="menu-button-box education-icon">
+          <button class="menu-button menu-button-education" onclick="window.location.href='course-catalog.html';">
+            <img src="icons/education.webp">
+            COURSES
+          </button>
+        </div>
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='lessons-catalog.html';">
+            <img src="icons/courses.png">
+            LESSONS
+          </button>
+        </div>
+        <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='support.html';">
+            <img src="icons/support.png">
+            SUPPORT
+          </button>
+        </div>
+        <div class="menu-button-box">
+            <button class="menu-button" id="auth-menu-button">
+                <img id="auth-menu-icon" src="icons/log in.png">
+                <span id="auth-menu-text">LOG IN</span>
+            </button>
+        </div>
+      </div>
+      <div class="cart">
+        <button class="cart-button" onclick="window.location.href='cart.html'">
+          <img src="icons/cart-2.png">
+          <span class="cart-badge">0</span>
+        </button>
+      </div>
+    </header>
+
+
+<main class="support-page">
+
+
+<section class="support-hero">
+
+    <h1>Support Center</h1>
+
+    <p>
+      Find answers about your account, purchases and courses.
+      If you need help, contact our team.
+    </p>
+
+</section>
+
+
+
+<section class="policies">
+
+<h2>Policies & Information</h2>
+
+
+<div class="accordion">
+
+
+<button class="accordion-button">
+Privacy Policy
+<span>+</span>
+</button>
+
+
+<div class="accordion-content">
+
+<p>
+We respect your privacy and protect your personal information.
+Your data is used only for account management, course access,
+purchases and improving your experience on GEN BALLOON.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<div class="accordion">
+
+
+<button class="accordion-button">
+Terms & Conditions
+<span>+</span>
+</button>
+
+
+<div class="accordion-content">
+
+<p>
+By using GEN BALLOON services, you agree with our terms,
+digital product rules and educational content conditions.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="accordion">
+
+
+<button class="accordion-button">
+Refund Policy
+<span>+</span>
+</button>
+
+
+<div class="accordion-content">
+
+<p>
+Because digital products and courses become available immediately
+after purchase, refund requests are reviewed individually.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="accordion">
+
+
+<button class="accordion-button">
+Course Access
+<span>+</span>
+</button>
+
+
+<div class="accordion-content">
+
+<p>
+Purchased courses are connected to your account automatically.
+If you have problems accessing your lessons, contact support.
+</p>
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+<section class="contact-section">
+
+
+<div class="contact-box">
+
+
+<h2>Contact Us</h2>
+
+
+<p>
+Have a question or problem?
+Send us a message and we will reply as soon as possible.
+</p>
+
+
+
+<form>
+
+
+<input 
+type="text"
+placeholder="Your name">
+
+
+
+<input 
+type="email"
+placeholder="Your email">
+
+
+
+<textarea 
+placeholder="Your message"></textarea>
+
+
+
+<button>
+Send Message
+</button>
+
+
+
+</form>
+
+
+</div>
+
+
+</section>
+
+
+
+</main>
+
+
+
+<script src="js/support.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const currentFile = window.location.pathname.split("/").pop() || "index.html";
+
+  document.querySelectorAll(".menu-button").forEach(button => {
+
+    const onclick = button.getAttribute("onclick");
+
+    if (onclick && onclick.includes(currentFile)) {
+      button.classList.add("active");
+    }
+
+  });
+
+});
+</script>
+
+
+</body>
+</html>
