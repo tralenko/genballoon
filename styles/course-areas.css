@@ -1,3 +1,15 @@
+.area-name{
+  width:90%;
+  height:30px;
+  margin-left:6%;
+  margin-right: auto;
+  margin-top:8%;
+  align-items:center;
+  display:flex;
+  font-size: 30px;
+  font-weight: 500;
+}
+
 .course-areas{
   width:90%;
   max-width:1400px;
@@ -18,7 +30,10 @@
   padding:30px;
 
   background:white;
-
+  padding: 16px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(205, 205, 211);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 15px;
   border-radius:32px;
 
   box-shadow:
@@ -130,7 +145,36 @@
   font-size:16px;
 }
 
+.course-actions{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-top:20px;
+}
+
+.course-price{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+}
+
+.old-price{
+  font-size:16px;
+  color:#999;
+  text-decoration:line-through;
+}
+
+.new-price{
+  font-size:28px;
+  font-weight:700;
+  color:#111;
+}
+
 @media (max-width:900px){
+
+  .area-name{
+    margin-top:25%;
+  }
 
   .course-areas{
     grid-template-columns:1fr;
@@ -210,6 +254,19 @@
   }
 
   .showcase-primary{
+    padding:0 20px;
     font-size:14px;
   }
+
+  .course-actions{
+  gap:12px;
+}
+
+.old-price{
+  font-size:13px;
+}
+
+.new-price{
+  font-size:22px;
+}
 }
