@@ -1,0 +1,290 @@
+.support-page {
+
+max-width:1100px;
+
+margin:120px auto 60px;
+
+padding:0 20px;
+
+}
+
+
+
+.support-hero {
+
+text-align:center;
+
+margin-bottom:60px;
+
+}
+
+
+
+.support-hero h1 {
+
+font-size:42px;
+
+margin-bottom:15px;
+
+}
+
+
+
+.support-hero p {
+
+font-size:18px;
+
+color:#666;
+
+max-width:650px;
+
+margin:auto;
+
+}
+
+
+
+.policies h2,
+.contact-box h2 {
+
+font-size:30px;
+
+margin-bottom:25px;
+
+}
+
+
+
+
+.accordion {
+
+
+background:white;
+
+border-radius:20px;
+
+margin-bottom:15px;
+
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+overflow:hidden;
+
+
+}
+
+
+
+.accordion-button {
+
+
+width:100%;
+
+background:white;
+
+border:none;
+
+padding:22px 25px;
+
+font-size:18px;
+
+font-weight:600;
+
+display:flex;
+
+justify-content:space-between;
+
+cursor:pointer;
+
+
+}
+
+
+
+.accordion-button span {
+
+font-size:28px;
+
+color:black;
+
+}
+
+
+
+.accordion-content {
+
+
+max-height:0;
+
+overflow:hidden;
+
+padding:0 25px;
+
+transition:.35s ease;
+
+
+}
+
+
+
+.accordion-content p {
+
+
+color:#666;
+
+line-height:1.6;
+
+}
+
+
+
+.accordion-content.active {
+
+
+max-height:250px;
+
+padding-bottom:25px;
+
+
+}
+
+
+
+
+
+.contact-section {
+
+
+margin-top:70px;
+
+
+}
+
+
+
+.contact-box {
+
+
+background:white;
+
+border-radius:25px;
+
+padding:40px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+
+
+}
+
+
+
+.contact-box p {
+
+color:#666;
+
+margin-bottom:25px;
+
+}
+
+
+
+
+.contact-box form {
+
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+
+}
+
+
+
+.contact-box input,
+.contact-box textarea {
+
+
+border:1px solid #ddd;
+
+border-radius:15px;
+
+padding:15px;
+
+font-size:16px;
+
+
+}
+
+
+
+.contact-box textarea {
+
+height:150px;
+
+resize:none;
+
+}
+
+
+
+
+.contact-box button {
+
+
+background:blackf;
+
+color:white;
+
+border:none;
+
+padding:16px;
+
+border-radius:15px;
+
+font-size:17px;
+
+cursor:pointer;
+
+
+}
+
+
+
+.contact-box button:hover {
+
+opacity:.85;
+
+}
+
+
+
+
+@media(max-width:600px){
+
+
+.support-page {
+
+margin-top:100px;
+
+}
+
+
+
+.support-hero h1 {
+
+font-size:32px;
+
+}
+
+
+
+.contact-box {
+
+padding:25px;
+
+}
+
+
+}
