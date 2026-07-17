@@ -30,6 +30,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
     <script defer src="js/home-products.js"></script>
+
+    <script defer src="js/auth-menu.js"></script>
   </head>
   <body>
     <header class="header">
@@ -38,17 +40,18 @@
       </button>
       <div class="logo" id="logo">
         <div>
-          <div class="logo-txt">
+          <img src="icons/logo.jpeg" alt="GenSpace Logo" class="logo-img">
+          <!--<div class="logo-txt">
             <p>GEN</p>
-          </div>
+          </div>-->
         </div>
         <div class="page-name">
-          <p>HOME</p>
+          <p>Balloon</p>
         </div>
       </div>
       <div class="menu-buttons-row">
         <div class="menu-button-box">
-          <button class="menu-button" onclick="window.location.href='index.html';">
+          <button class="menu-button active" onclick="window.location.href='index.html';">
             <img src="icons/home.png">
             HOME
           </button>
@@ -59,23 +62,29 @@
             SHOP
           </button>
       </div>
-        <div class="menu-button-box">
-          <button class="menu-button" onclick="window.location.href='course-catalog.html';">
-            <img src="icons/courses.png">
+      <div class="menu-button-box education-icon">
+          <button class="menu-button menu-button-education" onclick="window.location.href='course-catalog.html';">
+            <img src="icons/education.webp">
             COURSES
           </button>
         </div>
         <div class="menu-button-box">
+          <button class="menu-button" onclick="window.location.href='lessons-catalog.html';">
+            <img src="icons/courses.png">
+            LESSONS
+          </button>
+        </div>
+        <div class="menu-button-box" onclick="window.location.href='support.html';">
           <button class="menu-button">
             <img src="icons/support.png">
             SUPPORT
           </button>
         </div>
         <div class="menu-button-box">
-          <button class="menu-button" onclick="window.location.href='auth.html';">
-            <img src="icons/log in.png">
-            LOG IN
-          </button>
+            <button class="menu-button" id="auth-menu-button">
+                <img id="auth-menu-icon" src="icons/log in.png">
+                <span id="auth-menu-text">LOG IN</span>
+            </button>
         </div>
       </div>
       <div class="cart">
