@@ -394,4 +394,8 @@ header{
   .cart-button img {
   height: 25px;
 }
+
+.menu-button img{
+  height: 28px;
+}
 }
