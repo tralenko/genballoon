@@ -14,7 +14,8 @@ html {
 
 body {
   font-family: Roboto, arial;
-  margin-top: 8%;
+  margin-top: 0px;
+  background:#f7f9fc;
 
   -webkit-user-select: none;
   user-select: none;
