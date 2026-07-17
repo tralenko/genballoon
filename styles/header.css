@@ -25,35 +25,51 @@ header{
   display: none;
   position: relative;
   width: 100px;
-  height: 40px;
+  height: 44px;
   border: none;
-  background-color: transparent;
-  margin-left: 2px;
+  background: transparent;
+  margin-left: 0px;
   z-index: 2;
-
   -webkit-tap-highlight-color: transparent;
 }
 
 .header-burger-btn span {
   position: absolute;
-  width: 30px;
+  width: 24px;
   height: 3px;
-  background-color: black;
-  left: 5px;
-  top: 18.5px; /* (Высота кнопки 40 - высота палочки 3) / 2 */
-  transition: transform .5s, opacity .5s, background-color .5s;
+  border-radius: 999px;
+  background: #111;
+
+  left: 10px;
+  top: 20px;
+
+  transition: transform .35s ease,
+              opacity .35s ease,
+              background-color .35s ease;
 }
 
 .header-burger-btn span:nth-child(1){
-  transform: translateY(-10px);
+  transform: translateY(-7px);
 }
 
 .header-burger-btn span:nth-child(2){
-  transform: translateY(0px);
+  transform: translateY(0);
 }
 
 .header-burger-btn span:nth-child(3){
-  transform: translateY(10px);
+  transform: translateY(7px);
+}
+
+.header-burger-btn span:nth-child(1){
+  transform: translateY(-8px);
+}
+
+.header-burger-btn span:nth-child(2){
+  transform: translateY(0);
+}
+
+.header-burger-btn span:nth-child(3){
+  transform: translateY(8px);
 }
 
 .header.open .header-burger-btn span {
@@ -132,6 +148,12 @@ header{
   height: 30px;
 }
 
+.logo-img {
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .page-name {
   font-size: 25px;
   font-weight: 500;
@@ -147,19 +169,22 @@ header{
   align-items: center;
 }
 
+.menu-button-box {
+  max-width: 70px;
+}
+
 .menu-button {
   font-size: 9px;
   font-weight: 700;
   display: flex;
   flex-direction: column;
-  row-gap: 5px;
+  row-gap: 7px;
   align-items: center;
   justify-content: center;
-  width: 55px;
-  height: 60px;
-  background-color: rgb(255, 255, 255);
+  width: 65px;
+  height: 45px;
+  background: transparent;
   border-width: 0;
-  border-radius: 15px;
   margin-left: 12px;
   margin-right: 12px;
   transition:0.5s;
@@ -170,13 +195,49 @@ header{
   height: 23px;
 }
 
-.menu-button:hover {
-  background-color: #f5e2fb;
+.menu-button-education {
+  row-gap: 4px;
+  width: 65px;
+  margin-bottom: 3px;
 }
 
-.menu-button.active {
-  background-color: #f5e2fb; 
-  cursor: default; 
+.education-icon img{
+  height:30px;
+}
+
+.menu-button{
+    position: relative;
+    overflow: visible;
+    transition: color .3s ease;
+}
+
+.menu-button::after{
+    content: "";
+    position: absolute;
+    left: 8px;
+    bottom: -6px;
+
+    width: calc(100% - 16px);
+    height: 4px;
+
+    background: rgb(36, 71, 174);
+    border-radius: 999px;
+
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .35s ease;
+}
+
+.menu-button:hover::after{
+    transform: scaleX(1);
+}
+
+.menu-button.active::after{
+    transform: scaleX(1);
+}
+
+.menu-button.active{
+    cursor: default;
 }
 
 .cart {
@@ -203,7 +264,7 @@ header{
   row-gap: 5px;
   align-items: start;
   justify-content: center;
-  background-color: rgb(255, 255, 255);
+  background-color: transparent;
   border-width: 0;
   border-radius: 15px;
   margin-left: 12px;
@@ -263,6 +324,10 @@ header{
     border-radius: 10px;
   }
 
+  .menu-button{
+    margin:0;
+  }
+
   .menu-buttons-row {
     position: fixed;
     left: -95px;
@@ -291,10 +356,16 @@ header{
     border-color: rgb(238, 238, 238);
   }
 
-  .menu-button-box {
-    margin-top: 15px;
-    margin-left: 2px;
-  }
+  .menu-button-box{
+    width:100%;
+    max-width:none;
+
+    display:flex;
+    justify-content:center;
+
+    margin-top:15px;
+    margin-left:0;
+}
 
   .header.open .menu-buttons-row{
     transform: translateX(100%);
