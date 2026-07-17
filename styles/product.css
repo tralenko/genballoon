@@ -24,15 +24,28 @@
   grid-template-columns: 1fr 1fr;
   column-gap: 0px;
   row-gap: 0px;
-  border-width: 2px;
-  border-color: rgb(238, 238, 238);
+  border:1px solid rgb(205, 205, 211);
+  transition:
+    box-shadow .3s ease,
+    border-color .3s ease;
+
   border-style: solid;
   border-radius: 20px;
-  padding: 12px;
+  padding: 8px;
   box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.10);
-  background-color: rgb(247, 246, 246);
+  background-color: white;
   box-sizing: border-box;
   cursor: pointer;
+}
+
+.product-card:hover {
+
+  border-color:#8bc9ff;
+
+  box-shadow:
+    0 10px 35px rgba(24,119,242,.25),
+    0 0 20px rgba(24,119,242,.15);
+
 }
 
 .product-thumbnail {
@@ -91,7 +104,7 @@
   background-color: rgb(36, 71, 174);
   width: 110%;
   height: 38px;
-  border-radius: 8px;
+  border-radius: 10px;
   border-width: 0px;
   display: flex;
   justify-content: center;
