@@ -11,7 +11,7 @@ header{
 
   padding:0 22px;
 
-  z-index:100;
+  z-index:1000;
 
   background:rgba(255,255,255,0.85);
   backdrop-filter:blur(12px);
@@ -29,7 +29,7 @@ header{
   border: none;
   background: transparent;
   margin-left: 0px;
-  z-index: 2;
+  z-index: 1101;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -149,16 +149,20 @@ header{
 }
 
 .logo-img {
-  height: 50px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .page-name {
-  font-size: 25px;
+  font-size: 14px;
   font-weight: 500;
   padding-bottom: 0px;
   margin-left: 0px;
+}
+
+.page-name p{
+  font-size: 20px;
 }
 
 .menu-buttons-row {
@@ -294,15 +298,15 @@ header{
 
 @media (max-width: 900px) {
   .menu-button::after{
-  left: 0px;
-  top: 50%;
-  bottom: auto;
+    left: 0px;
+    top: 50%;
+    bottom: auto;
 
-  width: 4px;
-  height: 70%;
+    width: 4px;
+    height: 70%;
 
-  transform: translateY(-50%) scaleY(0);
-  transform-origin: center;
+    transform: translateY(-50%) scaleY(0);
+    transform-origin: center;
   }
 
   .menu-button:hover::after{
@@ -314,7 +318,7 @@ header{
   }
 
   header {
-    height: 75px;
+    height: 65px;
   }
 
   .logo-txt {
@@ -374,6 +378,8 @@ header{
     border-width: 2px;
     border-style: solid;
     border-color: rgb(238, 238, 238);
+
+    z-index: 1100;
   }
 
   .menu-button-box{
