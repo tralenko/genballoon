@@ -15,7 +15,6 @@
       rel="stylesheet">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/general.css">
-    <link rel="stylesheet" href="styles/ad-style.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/product.css">
     <link rel="stylesheet" href="styles/product-catalog.css">
@@ -35,13 +34,13 @@
       </button>
       <div class="logo" id="logo">
         <div>
-          <img src="icons/logo.jpeg" alt="GenSpace Logo" class="logo-img">
+          <!-- <img src="icons/logo.jpeg" alt="GenSpace Logo" class="logo-img"> -->
           <!--<div class="logo-txt">
             <p>GEN</p>
           </div>-->
         </div>
         <div class="page-name">
-          <p>Balloon</p>
+          <p>GENBALLOON</p>
         </div>
       </div>
       <div class="menu-buttons-row">
@@ -94,43 +93,46 @@
 
       <div class="catalog-header">
 
+  <div class="catalog-controls">
 
-      <div class="catalog-controls">
+    <div class="catalog-search">
+      <input
+        type="text"
+        id="product-search"
+        placeholder="Search products..."
+      >
+    </div>
+
+    <div class="catalog-categories">
+
+      <button class="categories-toggle">
+        <span>Categories</span>
+        <span class="toggle-icon">+</span>
+      </button>
 
       <div class="catalog-filters">
 
-        <button class="filter-btn active"
-                data-filter="all">
+        <button class="filter-btn active" data-filter="all">
           All
         </button>
 
-        <button class="filter-btn"
-                data-filter="patterns">
+        <button class="filter-btn" data-filter="patterns">
           Mosaic Frames Patterns
         </button>
 
-        <button class="filter-btn"
-                data-filter="stickers">
+        <button class="filter-btn" data-filter="stickers">
           Stickers Eyes & Mouths
         </button>
 
-        <button class="filter-btn"
-                data-filter="art">
+        <button class="filter-btn" data-filter="art">
           Balloon Art
         </button>
 
       </div>
 
+    </div>
 
-  <div class="catalog-search">
-    <input 
-      type="text" 
-      id="product-search"
-      placeholder="Search products..."
-    >
   </div>
-
-</div>
 
 </div>
       <div class="catalog-product-grid" id="products-container">
@@ -269,6 +271,12 @@
     </footer>
 
     <script>
+const header = document.querySelector("header");
+const controls = document.querySelector(".catalog-controls");
+
+console.log(header);
+console.log(controls);
+
 document.addEventListener("DOMContentLoaded", () => {
 
   // --- Активная кнопка меню ---
@@ -455,5 +463,34 @@ searchInput.addEventListener("input", () => {
     <div id="cart-toast" class="cart-toast">
       <span>✓ Added to cart</span>
     </div>
+
+    <script>
+      const btn = document.querySelector(".categories-toggle");
+      const filters = document.querySelector(".catalog-filters");
+      const categories = document.querySelector(".catalog-categories");
+
+      btn.addEventListener("click",()=>{
+
+        filters.classList.toggle("open");
+        btn.classList.toggle("open");
+
+        if(filters.classList.contains("open")){
+
+            const h = filters.scrollHeight;
+
+            document.querySelector(".catalog-product-grid")
+            .style.marginTop = -h + "px";
+
+        }else{
+
+            document.querySelector(".catalog-product-grid")
+            .style.marginTop = "0px";
+
+        }
+
+    });
+
+    </script>
+  
   </body>
 </html>
