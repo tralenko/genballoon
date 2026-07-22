@@ -236,7 +236,7 @@
     .catalog-header{
         margin-bottom:20px;
         position:sticky;
-        top:78px;
+        top:60px;
         margin-right:calc(50% - 48vw);
 
         z-index:100;
@@ -250,7 +250,7 @@
     .catalog-section{
         width:95%;
         margin:0 auto;
-        margin-top:23%;
+        margin-top:18%;
     }
 
 
@@ -262,7 +262,7 @@
 
         background:#fff;
 
-        border:1px solid #ececec;
+        border:1px solid rgb(205, 205, 211);
 
         border-radius:16px;
 
