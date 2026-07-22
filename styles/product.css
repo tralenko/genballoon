@@ -1,3 +1,7 @@
+.catalog-product-grid{
+    transition:margin-top .35s ease;
+}
+
 .catalog-product-grid {
   width: 93%;
   max-width: 1500px;
