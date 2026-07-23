@@ -16,7 +16,7 @@
   justify-items: center;
 
   margin: 0px;
-  margin-top: 2%;
+  margin-top: 0px;
   margin-left: 2%;
 }
 
@@ -65,10 +65,10 @@
 }
 
 .product-name-box {
-  height: 40px;
-  font-weight: 500;
+  height: 30px;
+  font-weight: 450;
   font-size: 13px;
-  margin-top: 5px;
+  margin-top: 8px;
   display: flex;
   line-height: 1.2;
   grid-column: span 2;
