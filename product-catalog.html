@@ -138,7 +138,7 @@
       <div class="catalog-product-grid" id="products-container">
       </div>
 
-      <div id="load-trigger"></div>
+      <div class="catalog-pagination"></div>
 
     </section>
 
@@ -291,7 +291,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentFilter = "all";
   let searchQuery = "";
 
-  function showSkeletons(count = 12) {
+  const PAGE_SIZE = 20;
+  let currentPage = 1;
+  let totalItems = 0;
+
+  function showSkeletons(count = PAGE_SIZE) {
 
   const container = document.getElementById("products-container");
 
@@ -325,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let query = supabaseClient
   .from("products")
-  .select("*")
+  .select("*", { count: "exact" })
   .eq("type", "file");
 
   if (currentFilter !== "all") {
@@ -339,14 +343,27 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   }
 
-const { data, error } = await query;
+  const from = (currentPage - 1) * PAGE_SIZE;
+  const to = from + PAGE_SIZE - 1;
+
+  query = query.range(from, to);
+
+const { data, error, count } = await query;
 
     if (error) {
       console.log("DB error:", error);
       return;
     }
 
+    totalItems = count || 0;
+
     container.innerHTML = "";
+
+    if (data.length === 0) {
+      container.innerHTML = `<p class="catalog-empty">No products found.</p>`;
+      renderPagination();
+      return;
+    }
 
     data.forEach((product, index) => {
       const card = document.createElement("div");
@@ -385,6 +402,8 @@ const { data, error } = await query;
       container.appendChild(card);
     });
 
+    renderPagination();
+
     // --- Клики по сетке товаров (вешаем ПОСЛЕ того как карточки отрисованы) ---
     const grid = document.getElementById("products-container");
 
@@ -414,6 +433,80 @@ const { data, error } = await query;
     });
   }
 
+  function goToPage(page) {
+    const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+    page = Math.min(Math.max(1, page), totalPages);
+
+    if (page === currentPage) return;
+
+    currentPage = page;
+    loadProducts();
+
+    const section = document.querySelector(".catalog-section");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function renderPagination() {
+    const pagination = document.querySelector(".catalog-pagination");
+    if (!pagination) return;
+
+    const totalPages = Math.ceil(totalItems / PAGE_SIZE);
+
+    pagination.innerHTML = "";
+
+    if (totalPages <= 1) return;
+
+    function makeBtn(label, page, { active = false, disabled = false, ariaLabel = null } = {}) {
+      const btn = document.createElement("button");
+      btn.className = "page-btn" + (active ? " active" : "");
+      btn.innerHTML = label;
+      btn.disabled = disabled;
+      if (ariaLabel) btn.setAttribute("aria-label", ariaLabel);
+      if (!disabled) {
+        btn.addEventListener("click", () => goToPage(page));
+      }
+      return btn;
+    }
+
+    function makeEllipsis() {
+      const span = document.createElement("span");
+      span.className = "page-ellipsis";
+      span.textContent = "…";
+      return span;
+    }
+
+    // Prev
+    pagination.appendChild(
+      makeBtn("&larr;", currentPage - 1, {
+        disabled: currentPage === 1,
+        ariaLabel: "Previous page",
+      })
+    );
+
+    // Собираем набор номеров страниц: первая, последняя, соседи текущей
+    const pages = new Set([1, totalPages, currentPage, currentPage - 1, currentPage + 1]);
+    const sortedPages = [...pages].filter(p => p >= 1 && p <= totalPages).sort((a, b) => a - b);
+
+    let prevPage = 0;
+    sortedPages.forEach((p) => {
+      if (prevPage && p - prevPage > 1) {
+        pagination.appendChild(makeEllipsis());
+      }
+      pagination.appendChild(makeBtn(p, p, { active: p === currentPage }));
+      prevPage = p;
+    });
+
+    // Next
+    pagination.appendChild(
+      makeBtn("&rarr;", currentPage + 1, {
+        disabled: currentPage === totalPages,
+        ariaLabel: "Next page",
+      })
+    );
+  }
+
   function showCartToast() {
 
   const toast = document.getElementById('cart-toast');
@@ -439,6 +532,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.classList.add('active');
 
     currentFilter = btn.dataset.filter;
+    currentPage = 1;
 
     loadProducts();
 
@@ -448,11 +542,15 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 
 const searchInput = document.getElementById("product-search");
 
+let searchDebounce;
+
 searchInput.addEventListener("input", () => {
 
   searchQuery = searchInput.value.trim();
+  currentPage = 1;
 
-  loadProducts();
+  clearTimeout(searchDebounce);
+  searchDebounce = setTimeout(loadProducts, 300);
 
 });
 
