@@ -106,14 +106,11 @@ header{
   width: 52px;
   height: 28px;
 
-  background-color: rgb(36, 71, 174);
-  color: white;
-
   display: flex;
   justify-content: center;
   align-items: center;
 
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 500;
 
   border-radius: 4px;
@@ -152,16 +149,6 @@ header{
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-}
-
-.page-name {
-  font-weight: 500;
-  padding-bottom: 0px;
-  margin-left: 0px;
-}
-
-.page-name p{
-  font-size: 24px;
 }
 
 .menu-buttons-row {
@@ -257,43 +244,58 @@ header{
   text-decoration: none;
 }
 
-.cart-button {
-  width: 60px;
-  height: 60px;
-  font-size: 9px;
-  font-weight: 700;
-  display: flex;
-  flex-direction: column;
-  row-gap: 5px;
-  align-items: start;
-  justify-content: center;
-  background-color: transparent;
-  border-width: 0;
-  border-radius: 15px;
-  margin-left: 12px;
-  margin-right: 12px;
-  transition:0.5s;
-  cursor: pointer;
-  position: relative;
+.cart-button{
+
+    width:auto;
+    height:46px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    padding:0;
+
+    background:transparent;
+    border:none;
+    border-radius:0;
+
+    cursor:pointer;
 }
 
-.cart-button img {
-  height: 23px;
+.cart-button img{
+
+    height:20px;
 }
 
-.cart-badge {
-  display: none;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 0px;
-  color: #111;
-  font-size: 20px;
-  font-weight: 500;
-  pointer-events: none;
-  line-height: 1;
-  padding-right: 10px;
+.cart-badge{
+
+    display:none;
+
+    position:static;
+    order:-1;
+
+    min-width:auto;
+    height:auto;
+
+    padding:0;
+
+    background:none;
+    border:none;
+
+    color:#111;
+
+    font-size:22px;
+    font-weight:500;
+
+    line-height:1;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
+
 
 @media (max-width: 900px) {
   .menu-button::after{
@@ -334,11 +336,6 @@ header{
 
   .header-burger-btn {
     display: block;
-  }
-
-  .cart {
-    width: 140px;
-    justify-content: flex-end;
   }
 
   .profile-button {
@@ -396,11 +393,36 @@ header{
     transform: translateX(100%);
   }
 
-  .cart-button img {
-  height: 18px;
-}
-
 .menu-button img{
   height: 28px;
 }
+}
+
+@media (max-width:900px){
+
+    .cart{
+
+        width:100px;
+
+        justify-content:flex-end;
+
+        padding-right:20px; /* правее */
+
+    }
+
+    .cart-button{
+
+        gap:8px;
+    }
+
+    .cart-button img{
+
+        height:20px;
+    }
+
+    .cart-badge{
+
+        font-size:22px;
+    }
+
 }
