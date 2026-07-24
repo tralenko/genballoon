@@ -155,14 +155,13 @@ header{
 }
 
 .page-name {
-  font-size: 14px;
   font-weight: 500;
   padding-bottom: 0px;
   margin-left: 0px;
 }
 
 .page-name p{
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .menu-buttons-row {
