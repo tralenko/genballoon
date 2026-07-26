@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="styles/added-notification.css">
         
     <script defer src="js/header.js"></script>
-    <script defer src="js/product-cart.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/filter-product.js"></script>
 
@@ -267,190 +266,224 @@
     </footer>
 
     <script>
-const header = document.querySelector("header");
-const controls = document.querySelector(".catalog-controls");
+      (function () {
+  "use strict";
 
-console.log(header);
-console.log(controls);
+  const PAGE_SIZE = 20;
 
-document.addEventListener("DOMContentLoaded", () => {
-
-  // --- Активная кнопка меню ---
-  const currentFile = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.menu-button').forEach(button => {
-    const onclickAttribute = button.getAttribute('onclick');
-    if (onclickAttribute && onclickAttribute.includes(currentFile)) {
-      button.classList.add('active');
-    }
-  });
+  let container;
+  let searchInput;
+  let paginationEl;
+  let toast;
 
   let currentFilter = "all";
   let searchQuery = "";
-
-  const PAGE_SIZE = 20;
   let currentPage = 1;
   let totalItems = 0;
+  let searchDebounce;
 
-  function showSkeletons(count = PAGE_SIZE) {
+  document.addEventListener("DOMContentLoaded", init);
 
-  const container = document.getElementById("products-container");
+  // Chrome/Safari иногда «замораживают» position:sticky после восстановления
+  // страницы из bfcache (переход назад со страницы товара) — форсируем reflow.
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) {
+      fixStickyLayout();
+    }
+  });
 
-  container.innerHTML = "";
+  function init() {
+    container = document.getElementById("products-container");
+    searchInput = document.getElementById("product-search");
+    paginationEl = document.querySelector(".catalog-pagination");
+    toast = document.getElementById("cart-toast");
 
-  for(let i = 0; i < count; i++){
+    highlightActiveMenuButton();
+    bindFilterButtons();
+    bindSearchInput();
+    bindGridClicks();
 
-    const skeleton = document.createElement("div");
-
-    skeleton.className = "product-card skeleton-card";
-
-    skeleton.innerHTML = `
-      <div class="skeleton-image"></div>
-      <div class="skeleton-line"></div>
-      <div class="skeleton-line short"></div>
-
-      <div class="skeleton-button"></div>
-
-      <div class="skeleton-button"></div>
-    `;
-
-    container.appendChild(skeleton);
+    loadProducts();
   }
-}
 
-  // --- Загрузка товаров и обработка кликов ---
+  // ============================
+  // Sticky fix
+  // ============================
+  function fixStickyLayout() {
+    const candidates = document.querySelectorAll(
+      ".catalog-header, .catalog-controls, .catalog-categories"
+    );
+
+    candidates.forEach((el) => {
+      if (getComputedStyle(el).position !== "sticky") return;
+
+      const prevPosition = el.style.position;
+      el.style.position = "static";
+      void el.offsetHeight; // форсируем reflow
+      el.style.position = prevPosition;
+    });
+  }
+
+  // ============================
+  // Активная кнопка меню
+  // ============================
+  function highlightActiveMenuButton() {
+    const currentFile = window.location.pathname.split("/").pop() || "index.html";
+
+    document.querySelectorAll(".menu-button").forEach((button) => {
+      const onclickAttr = button.getAttribute("onclick");
+      if (onclickAttr && onclickAttr.includes(currentFile)) {
+        button.classList.add("active");
+      }
+    });
+  }
+
+  // ============================
+  // Скелетоны
+  // ============================
+  function showSkeletons(count = PAGE_SIZE) {
+    container.innerHTML = "";
+
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < count; i++) {
+      const skeleton = document.createElement("div");
+      skeleton.className = "product-card skeleton-card";
+      skeleton.innerHTML = `
+        <div class="skeleton-image"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line short"></div>
+        <div class="skeleton-button"></div>
+        <div class="skeleton-button"></div>
+      `;
+      fragment.appendChild(skeleton);
+    }
+
+    container.appendChild(fragment);
+  }
+
+  // ============================
+  // Загрузка товаров
+  // ============================
   async function loadProducts() {
-    const container = document.getElementById("products-container");
-
     showSkeletons();
 
     let query = supabaseClient
-  .from("products")
-  .select("*", { count: "exact" })
-  .eq("type", "file");
+      .from("products")
+      .select("*", { count: "exact" })
+      .eq("type", "file");
 
-  if (currentFilter !== "all") {
-  query = query.eq("category", currentFilter);
-  }
+    if (currentFilter !== "all") {
+      query = query.eq("category", currentFilter);
+    }
 
-  if(searchQuery){
-  query = query.ilike(
-    "title",
-    `%${searchQuery}%`
-  );
-  }
+    if (searchQuery) {
+      query = query.ilike("title", `%${searchQuery}%`);
+    }
 
-  const from = (currentPage - 1) * PAGE_SIZE;
-  const to = from + PAGE_SIZE - 1;
+    const from = (currentPage - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    query = query.range(from, to);
 
-  query = query.range(from, to);
-
-const { data, error, count } = await query;
+    const { data, error, count } = await query;
 
     if (error) {
-      console.log("DB error:", error);
+      console.error("DB error:", error);
+      container.innerHTML = `<p class="catalog-empty">Something went wrong. Please try again.</p>`;
+      renderPagination();
+      fixStickyLayout();
       return;
     }
 
     totalItems = count || 0;
-
     container.innerHTML = "";
 
     if (data.length === 0) {
       container.innerHTML = `<p class="catalog-empty">No products found.</p>`;
       renderPagination();
+      fixStickyLayout();
       return;
     }
 
+    const fragment = document.createDocumentFragment();
+
     data.forEach((product, index) => {
-      const card = document.createElement("div");
-      card.className = "product-card fade-in";
-      card.style.animationDelay = `${index * 70}ms`;
-      card.setAttribute("data-id", product.id);
-
-      card.innerHTML = `
-        <div class="product-thumbnail">
-          <img class="p-thumbnail" src="${product.image_url || ''}">
-        </div>
-        <div class="product-name-box">
-          <p class="product-name">${product.title}</p>
-        </div>
-        <div class="p-start-course">
-          <button class="p-buy-link add-to-cart-btn"
-            data-id="${product.id}"
-            data-title="${product.title}"
-            data-price="${product.price}"
-            data-image="${product.image_url || ''}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M6 6h15l-2 9H7L6 6Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M6 6L5 3H2" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="9" cy="20" r="1.5" fill="white"/>
-              <circle cx="18" cy="20" r="1.5" fill="white"/>
-            </svg>
-          </button>
-        </div>
-        <div class="p-price-box">
-          <div class="p-price-ammount-box">
-            <p>$${product.price}</p>
-          </div>
-        </div>
-      `;
-
-      container.appendChild(card);
+      fragment.appendChild(createProductCard(product, index));
     });
+
+    container.appendChild(fragment);
 
     renderPagination();
-
-    // --- Клики по сетке товаров (вешаем ПОСЛЕ того как карточки отрисованы) ---
-    const grid = document.getElementById("products-container");
-
-    grid.addEventListener('click', (e) => {
-
-      // Если кликнули по кнопке корзины — добавляем товар, карточку не открываем
-      const btn = e.target.closest('.add-to-cart-btn');
-      if (btn) {
-        addToCart({
-          id: btn.dataset.id,
-          title: btn.dataset.title,
-          price: btn.dataset.price,
-          image_url: btn.dataset.image,
-        });
-
-        showCartToast();
-        return;
-      }
-
-      // Иначе — открываем страницу товара
-      const card = e.target.closest('.product-card');
-      if (!card) return;
-      const productId = card.getAttribute('data-id');
-      if (productId) {
-        window.location.href = `product.html?id=${productId}`;
-      }
-    });
+    fixStickyLayout();
   }
 
-  function goToPage(page) {
+  function createProductCard(product, index) {
+    const card = document.createElement("div");
+    card.className = "product-card fade-in";
+    card.style.animationDelay = `${index * 70}ms`;
+    card.dataset.id = product.id;
+
+    card.innerHTML = `
+      <div class="product-thumbnail">
+        <img class="p-thumbnail" src="${product.image_url || ""}">
+      </div>
+      <div class="product-name-box">
+        <p class="product-name">${product.title}</p>
+      </div>
+      <div class="p-start-course">
+        <button class="p-buy-link add-to-cart-btn"
+          data-id="${product.id}"
+          data-title="${product.title}"
+          data-price="${product.price}"
+          data-image="${product.image_url || ""}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6h15l-2 9H7L6 6Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 6L5 3H2" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="9" cy="20" r="1.5" fill="white"/>
+            <circle cx="18" cy="20" r="1.5" fill="white"/>
+          </svg>
+        </button>
+      </div>
+      <div class="p-price-box">
+        <div class="p-price-ammount-box">
+          <p>$${product.price}</p>
+        </div>
+      </div>
+    `;
+
+    return card;
+  }
+
+  // ============================
+  // Пагинация
+  // ============================
+  async function goToPage(page) {
     const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
     page = Math.min(Math.max(1, page), totalPages);
 
     if (page === currentPage) return;
 
     currentPage = page;
-    loadProducts();
+    await loadProducts();
 
-    const section = document.querySelector(".catalog-section");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    // Скроллим в самый верх страницы. body у этого проекта — собственный
+    // скролл-контейнер (overflow-y:auto), поэтому window.scrollTo не сработает,
+    // скроллим сразу оба возможных контейнера для надёжности.
+    [document.scrollingElement, document.documentElement, document.body].forEach((el) => {
+      if (!el) return;
+      if (typeof el.scrollTo === "function") {
+        el.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        el.scrollTop = 0;
+      }
+    });
   }
 
   function renderPagination() {
-    const pagination = document.querySelector(".catalog-pagination");
-    if (!pagination) return;
+    if (!paginationEl) return;
 
     const totalPages = Math.ceil(totalItems / PAGE_SIZE);
-
-    pagination.innerHTML = "";
+    paginationEl.innerHTML = "";
 
     if (totalPages <= 1) return;
 
@@ -473,86 +506,94 @@ const { data, error, count } = await query;
       return span;
     }
 
-    // Prev
-    pagination.appendChild(
-      makeBtn("&larr;", currentPage - 1, {
-        disabled: currentPage === 1,
-        ariaLabel: "Previous page",
-      })
+    paginationEl.appendChild(
+      makeBtn("&larr;", currentPage - 1, { disabled: currentPage === 1, ariaLabel: "Previous page" })
     );
 
-    // Собираем набор номеров страниц: первая, последняя, соседи текущей
     const pages = new Set([1, totalPages, currentPage, currentPage - 1, currentPage + 1]);
-    const sortedPages = [...pages].filter(p => p >= 1 && p <= totalPages).sort((a, b) => a - b);
+    const sortedPages = [...pages].filter((p) => p >= 1 && p <= totalPages).sort((a, b) => a - b);
 
     let prevPage = 0;
     sortedPages.forEach((p) => {
       if (prevPage && p - prevPage > 1) {
-        pagination.appendChild(makeEllipsis());
+        paginationEl.appendChild(makeEllipsis());
       }
-      pagination.appendChild(makeBtn(p, p, { active: p === currentPage }));
+      paginationEl.appendChild(makeBtn(p, p, { active: p === currentPage }));
       prevPage = p;
     });
 
-    // Next
-    pagination.appendChild(
-      makeBtn("&rarr;", currentPage + 1, {
-        disabled: currentPage === totalPages,
-        ariaLabel: "Next page",
-      })
+    paginationEl.appendChild(
+      makeBtn("&rarr;", currentPage + 1, { disabled: currentPage === totalPages, ariaLabel: "Next page" })
     );
   }
 
+  // ============================
+  // Корзина / тост
+  // ============================
   function showCartToast() {
+    if (!toast) return;
 
-  const toast = document.getElementById('cart-toast');
+    toast.classList.add("show");
+    clearTimeout(toast.hideTimer);
+    toast.hideTimer = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2500);
+  }
 
-  if (!toast) return;
+  function bindGridClicks() {
+    container.addEventListener("click", (e) => {
+      const btn = e.target.closest(".add-to-cart-btn");
 
-  toast.classList.add('show');
+      if (btn) {
+        addToCart({
+          id: btn.dataset.id,
+          title: btn.dataset.title,
+          price: btn.dataset.price,
+          image_url: btn.dataset.image,
+        });
 
-  clearTimeout(toast.hideTimer);
+        showCartToast();
+        return;
+      }
 
-  toast.hideTimer = setTimeout(() => {
-    toast.classList.remove('show');
-  }, 2500);
-}
+      const card = e.target.closest(".product-card");
+      if (!card) return;
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
+      window.location.href = `product.html?id=${card.dataset.id}`;
+    });
+  }
 
-  btn.addEventListener('click', () => {
+  // ============================
+  // Фильтры и поиск
+  // ============================
+  function bindFilterButtons() {
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
 
-    document.querySelectorAll('.filter-btn')
-      .forEach(b => b.classList.remove('active'));
+        currentFilter = btn.dataset.filter;
+        currentPage = 1;
 
-    btn.classList.add('active');
+        loadProducts();
+      });
+    });
+  }
 
-    currentFilter = btn.dataset.filter;
-    currentPage = 1;
+  function bindSearchInput() {
+    if (!searchInput) return;
 
-    loadProducts();
+    searchInput.addEventListener("input", () => {
+      searchQuery = searchInput.value.trim();
+      currentPage = 1;
 
-  });
-
-});
-
-const searchInput = document.getElementById("product-search");
-
-let searchDebounce;
-
-searchInput.addEventListener("input", () => {
-
-  searchQuery = searchInput.value.trim();
-  currentPage = 1;
-
-  clearTimeout(searchDebounce);
-  searchDebounce = setTimeout(loadProducts, 300);
-
-});
-
-  loadProducts();
-});
-</script>
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(loadProducts, 300);
+    });
+  }
+})();
+    </script>
+    
 
     <div id="cart-toast" class="cart-toast">
       <span>✓ Added to cart</span>
